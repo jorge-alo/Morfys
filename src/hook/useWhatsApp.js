@@ -19,7 +19,7 @@ export const useWhatsApp = () => {
       `Método de pago: ${metodoPago}\n` +
       (metodoEntrega === 'envienmelo' ? `Ubicación: ${direccion}\n` : '') +
       `Pedido:\n${pedido.map(p => {
-        const lineaPrincipal = ` ${p.tamanio ? "" : p.cant} ${p.name} ${p.tamanio ? "" : '$' + p.priceVariable}`;
+        const lineaPrincipal = ` ${p.tamanio || p.price == 0 ? "" : p.cant} ${p.name} ${p.tamanio || p.price ? "" : '$' + p.priceVariable}`;
         const variantes = p.variantes?.length > 0
           ? `${p.variantes[0].nombre}:\n` + Object.entries(p.variantesOpcionesSelecionadas).map(([nombre, valor]) =>
             `  ${valor.cantOpciones}x ${nombre} $${valor.valor}`
