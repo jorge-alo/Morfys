@@ -1,0 +1,25 @@
+.container-local {   
+   height: 100dvh;
+    position: relative;
+}
+.container-local-section {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/*-----------------------------------media mobile---------------------------------*/
+
+@media (max-width: 550px) {
+   .container-local {  
+    height: auto; 
+     min-height: 100dvh;
+}
+ .container-local-section {
+    position: sticky;
+    top: 200px;
+    flex-direction: column;
+    margin-top: 0;
+   
+ }
+}

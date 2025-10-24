@@ -1,0 +1,22 @@
+.container-tamaño-opcion__seleccion {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 50%;
+    margin: 5px ;
+}
+.container-tamaño-opcion-seleccion__sumar-restar {
+    display: flex;
+    align-items: center;
+    border-radius: 25px;
+    background-color: #ccc;
+    gap: 5px;
+    padding: 0 2px;
+}
+.container-tamaño-opcion-seleccion__sumar-restar span {
+    padding: 0 5px;
+}
+.container-tamaño-opcion-seleccion__sumar-restar span:hover {
+    cursor: pointer;
+}
