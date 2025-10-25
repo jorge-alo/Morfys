@@ -68,5 +68,6 @@
     }
     .container-horario-resto div p {
         font-size: .85rem;
+        background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
 }
