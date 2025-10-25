@@ -27,7 +27,7 @@
 }
 
 .container-cardsection-card__data {
-
+    display: flex;
     max-width: 300px;
     height: fit-content;
     border: 1px solid #ccc;
