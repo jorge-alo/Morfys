@@ -49,7 +49,7 @@
 
     .container-categorias-mobile__items {
         display: flex;
-        padding: 0 5px 3px 5px;
+        padding: 5px;
         width: 90%;
         background-color: #c7b7bd;
         border-radius: 4px;
