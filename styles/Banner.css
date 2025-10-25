@@ -66,4 +66,7 @@
         display: flex;
         align-items: end;
     }
+    .container-horario-resto div p {
+        font-size: .85rem;
+    }
 }
