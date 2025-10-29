@@ -41,6 +41,7 @@ cursor: pointer;
     gap: 5px;
     max-height: 400px;
     overflow: auto;
+    font-size: 1.5rem;
 }
 .container-opcion__unidades {
     display: flex;
@@ -76,9 +77,9 @@ cursor: pointer;
     cursor: pointer;
 }
 
-.limite {
+.container-variantes__opcion .limite {
     color: #f00;
 }
-.debeseleccionar {
+.container-variantes__opcion .debeseleccionar {
     color: #394;
 }

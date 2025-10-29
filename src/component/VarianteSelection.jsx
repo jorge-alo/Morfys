@@ -6,7 +6,7 @@ export const VarianteSelection = ({ setSelectedVariante }) => {
 
     const { comidaData, setComidaData, setModalIsTrue, variantesOpcionesSelecionadas, setVariantesOpcionesSelecionadas, contVariable, setContVariable } = useContext(DataContext);
     
-    
+    console.log("Valor de contVariable en VarianteSelection", contVariable);
     const limite = comidaData.variantes[0].limite ? comidaData.variantes[0].limite : null;
     console.log("Valor de limite en VarianteSelection", limite);
     const cantPedido = comidaData.cant;
@@ -102,7 +102,7 @@ export const VarianteSelection = ({ setSelectedVariante }) => {
             <button
                 className={!limite ? 'opcion-aceptar' : contVariable != cantOpciones ? 'opcion-aceptar-disabled' : 'opcion-aceptar'}
                 disabled={ !limite ? false : contVariable != cantOpciones }
-                onClick={!limite ? handleOnclick : contVariable == cantOpciones && handleOnclick }
+                onClick={!limite ? handleOnclick : contVariable == cantOpciones ? handleOnclick : null }
             >
                 { limite ?
                  contVariable == cantOpciones 

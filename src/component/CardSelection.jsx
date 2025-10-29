@@ -251,7 +251,7 @@ export const CardSelection = ({ setSelectedVariante }) => {
                         :
                         comidaData.variantes && comidaData.variantes.length > 0
                             ?
-                            comidaData.variantesOpcionesSelecionadas
+                            Object.keys(comidaData.variantesOpcionesSelecionadas || {}).length > 0
                                 ? 'modal-button'
                                 : 'modal-buton-disable'
                             :
@@ -262,8 +262,8 @@ export const CardSelection = ({ setSelectedVariante }) => {
                         ?
                         !(comidaData.variantesOpcionesSelecionadas && Object.entries(comidaData.variantesOpcionesSelecionadas).length > 0)
                         :
-                        comidaData.variantes && comidaData.variantes.length > 0
-                            ? !comidaData.variantesOpcionesSelecionadas
+                        comidaData.variantes && comidaData.variantes.length > 0 
+                            ? Object.keys(comidaData.variantesOpcionesSelecionadas || {}).length === 0
                             : false
                 }
             >
@@ -278,7 +278,7 @@ export const CardSelection = ({ setSelectedVariante }) => {
                         :
                         comidaData.variantes && comidaData.variantes.length > 0
                             ?
-                            comidaData.variantesOpcionesSelecionadas
+                             Object.keys(comidaData.variantesOpcionesSelecionadas || {}).length > 0
                                 ?
                                 <p> Agregar a mi pedido</p>
                                 :
