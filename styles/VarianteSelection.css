@@ -46,7 +46,7 @@ cursor: pointer;
 .container-opcion__unidades {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 20px;
     background-color: #ccc;
     padding: 2px 10px;
     border-radius: 25px;
