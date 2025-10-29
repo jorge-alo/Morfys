@@ -5,12 +5,12 @@ import { DataContext } from '../context/DataContext';
 export const VarianteSelection = ({ setSelectedVariante }) => {
 
     const { comidaData, setComidaData, setModalIsTrue, variantesOpcionesSelecionadas, setVariantesOpcionesSelecionadas, contVariable, setContVariable } = useContext(DataContext);
-    
+
     console.log("Valor de contVariable en VarianteSelection", contVariable);
     const limite = comidaData.variantes[0].limite ? comidaData.variantes[0].limite : null;
     console.log("Valor de limite en VarianteSelection", limite);
     const cantPedido = comidaData.cant;
-    const cantOpciones = limite && (limite * cantPedido );
+    const cantOpciones = limite && (limite * cantPedido);
     console.log("Valor de cantOpciones en VarianteSelection", cantOpciones);
     console.log("Valor de contVariable en VarianteSelection", contVariable);
     const handleSumar = (opcion) => {
@@ -22,7 +22,7 @@ export const VarianteSelection = ({ setSelectedVariante }) => {
         setContVariable(prevCont => prevCont + 1);
 
         setVariantesOpcionesSelecionadas(prev => {
-            const prevOpciones = prev[opcion.nombre] || {cantOpciones: 0, valor: 0}
+            const prevOpciones = prev[opcion.nombre] || { cantOpciones: 0, valor: 0 }
             const nuevoValor = prevOpciones.cantOpciones + 1;
             return {
                 ...prev,
@@ -49,10 +49,16 @@ export const VarianteSelection = ({ setSelectedVariante }) => {
             })
             setContVariable(prevCont => prevCont - 1);
         }
+        setVariantesOpcionesSelecionadas(prev => {
+            const nuevoEstado = { ...prev };
+            delete nuevoEstado[opcion.nombre];
+            return nuevoEstado;
+        })
+
     }
 
     const handleOnclick = () => {
-       const totalOpciones = Object.values(variantesOpcionesSelecionadas).reduce((acc, item) => acc + item.valor, 0)
+        const totalOpciones = Object.values(variantesOpcionesSelecionadas).reduce((acc, item) => acc + item.valor, 0)
         console.log("Valor de totalOpciones en handleOnclick", totalOpciones);
         const totalComida = Number(comidaData.priceVariable) + totalOpciones;
         setComidaData(item => {
@@ -76,8 +82,8 @@ export const VarianteSelection = ({ setSelectedVariante }) => {
                 </div>
                 <h3> Opciones disponibles</h3>
                 {
-                   limite &&
-                    contVariable >= cantOpciones
+                    limite &&
+                        contVariable >= cantOpciones
                         ?
                         <h5 className='limite'> Limite alcanzado</h5>
                         :
@@ -101,14 +107,14 @@ export const VarianteSelection = ({ setSelectedVariante }) => {
             </div>
             <button
                 className={!limite ? 'opcion-aceptar' : contVariable != cantOpciones ? 'opcion-aceptar-disabled' : 'opcion-aceptar'}
-                disabled={ !limite ? false : contVariable != cantOpciones }
-                onClick={!limite ? handleOnclick : contVariable == cantOpciones ? handleOnclick : null }
+                disabled={!limite ? false : contVariable != cantOpciones}
+                onClick={!limite ? handleOnclick : contVariable == cantOpciones ? handleOnclick : null}
             >
-                { limite ?
-                 contVariable == cantOpciones 
-                 ? "Aceptar" 
-                 : `Faltan ${cantOpciones - contVariable} ${comidaData.variantes[0].nombre} `
-                 : "Aceptar"
+                {limite ?
+                    contVariable == cantOpciones
+                        ? "Aceptar"
+                        : `Faltan ${cantOpciones - contVariable} ${comidaData.variantes[0].nombre} `
+                    : "Aceptar"
                 }
             </button>
         </div>
