@@ -70,12 +70,13 @@
     .container-horario-resto div p {
         font-size: .85rem;
         background-image: linear-gradient(to bottom,
-                rgba(90, 90, 90, 0.5),
-                /* Amarillo muy transparente */
-                rgba(90, 90, 90, 0.1),
-                /* Naranja más transparente en el centro */
-                rgba(90, 90, 90, 0.5)
-                /* Amarillo muy transparente */
+                rgba(60, 60, 60, 0.7),
+                
+                rgba(60, 60, 60, 0.1),
+                
+                rgba(60, 60, 60, 0.7)
+               
             );
+          
     }
 }

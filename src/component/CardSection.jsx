@@ -34,14 +34,14 @@ export const CardSection = ({ comidas }) => {
     if (comidasPorCategorias?.length && comidasPorCategorias["menu"]) {
       resultado.push(["menu", comidasPorCategorias["menu"]]);
     }
-    if(categoriasEntries){
-       for (const [cat, comidasArray] of categoriasEntries) {
-      if (cat != "menu") {
-        resultado.push([cat, comidasArray]);
+    if (categoriasEntries) {
+      for (const [cat, comidasArray] of categoriasEntries) {
+        if (cat != "menu") {
+          resultado.push([cat, comidasArray]);
+        }
       }
     }
-    }
-   
+
     return resultado;
   }, [comidasPorCategorias])
 
@@ -66,36 +66,38 @@ export const CardSection = ({ comidas }) => {
                       e.stopPropagation();
                       handleclick(comida)
                     }}>
-                    {
-                      comida.image
-                      &&
-                      <div className="container-cardsection__image">
-                        <img src={comida.image} alt={comida.image} />
-                      </div>
-                    }
-
                     <h3>{comida.name}</h3>
-                    {
-                      comida.price == 0 && comida.variantes.length > 0
-                      &&
-                      <>
-                        <h3> {comida.variantes[0].nombre} </h3>
-                        <div className='container-opciones'>
-                          {comida.variantes[0].opciones.map((op, index) => {
-                            if (op.standby != 1) {
-                              return <div key={index} className='container-opciones__data'>
-                                <p > {op.nombre}:</p> <p>${op.precio_adicional} </p>
-                              </div>
-                            }
-                            return null
-                          })}
+                    <div className='card-data'>
+
+                      {
+                        comida.image
+                        &&
+                        <div className="container-cardsection__image">
+                          <img src={comida.image} alt={comida.image} />
                         </div>
-                      </>
-
-                    }
+                      }
+                      {
+                        comida.price == 0 && comida.variantes.length > 0
+                        ?                     
+                          <div className='container-opciones'>
+                            <h4> {comida.description} </h4>
+                            {comida.variantes[0].opciones.map((op, index) => {
+                              if (op.standby != 1) {
+                                return <div key={index} className='container-opciones__data'>
+                                  <p > {op.nombre}:</p> <p>${op.precio_adicional} </p>
+                                </div>
+                              }
+                              return null
+                            })}
+                          </div>
+                          : 
+                          <div className='container-opciones__sinvariantes'>
+                            <h4> {comida.description} </h4>
+                            <p> precio: ${comida.price} </p>
+                          </div>                       
+                      }
+                    </div>
                   </div>
-
-
                 ))}
               </div>
             </div>

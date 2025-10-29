@@ -60,7 +60,7 @@ cursor: pointer;
     border: none;
     background-color: #f53425;
     color: #fff;
-    padding: 5px;
+    padding: 10px;
     border-radius: 4px;
 }
 
@@ -68,7 +68,7 @@ cursor: pointer;
     border: none;
     background-color: #f5342590;
     color: #fff;
-    padding: 5px;
+    padding: 10px;
     border-radius: 4px;
 }
 .opcion-aceptar:hover {

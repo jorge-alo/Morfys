@@ -11,12 +11,26 @@
     align-items: center;
     border-radius: 25px;
     background-color: #ccc;
-    gap: 5px;
-    padding: 0 2px;
+    gap: 10px;
+    padding: 5px 10px;
 }
-.container-tamaño-opcion-seleccion__sumar-restar span {
-    padding: 0 5px;
+
+.container-tamaño-opcion-seleccion__sumar-restar p {
+    font-size: 1.5rem;
+}
+.container-modal span {
+    padding: 0;
+    font-size: 1.5rem;
 }
 .container-tamaño-opcion-seleccion__sumar-restar span:hover {
     cursor: pointer;
 }
+.container-modal h5, .container-modal h6 {
+    font-size: 1rem;
+    color: #666;
+}
+
+.container-modal button {
+    font-size: 1rem;
+}
+

@@ -1,6 +1,6 @@
 .container-categorias {
     flex-grow: .5;
-    
+
 }
 
 .container-categorias__fullScream {
@@ -29,11 +29,11 @@
 
 @media (max-width: 550px) {
     .container-categorias {
-        position:fixed;
-         /* ✅ se queda fijo al hacer scroll */
+        position: fixed;
+        /* ✅ se queda fijo al hacer scroll */
         top: 150px;
-       left: 0;
-       right: 0;
+        left: 0;
+        right: 0;
         z-index: 10000;
     }
 
@@ -44,13 +44,13 @@
     .container-categorias__mobile {
         display: flex;
         justify-content: center;
-       
+
     }
 
     .container-categorias-mobile__items {
         display: flex;
-        padding: 5px;
-        width: 90%;
+        padding: 10px;
+        width: 100%;
         background-color: #c7b7bd;
         border-radius: 4px;
     }
@@ -65,7 +65,13 @@
         /* ✅ se engancha en cada item */
         -webkit-overflow-scrolling: touch;
         /* ✅ suaviza en iOS */
+        scrollbar-width: none;
+        /* Firefox */
+    }
 
+    .container-categorias-mobile__items div::-webkit-scrollbar {
+        display: none;
+        /* Chrome, Safari y Edge */
     }
 
     .container-categorias-mobile__items a {
