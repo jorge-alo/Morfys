@@ -159,17 +159,17 @@ export const CardSelection = ({ setSelectedVariante }) => {
                                     <h5> {comidaData.name} </h5>
 
                                     :
-                                    <>
+                                    <div>
                                         <h5>{ comidaData.price  == 0 ? "" : `${cont}X` }</h5>
                                         <h5> {comidaData.name} </h5>
                                        { comidaData.price == 0 ? "" : <h5 className="container-modal__container-description_price"> (${comidaData.price}) </h5>}
-                                    </>
+                                    </div>
                             }
 
                         </div>
                         <h5> {comidaData.description} </h5>
                     </div>
-                    {comidaData.tamanio ? "" : comidaData.price == 0 ? "" : <p> ${comidaData.priceVariable} </p>}
+                    {comidaData.tamanio ? "" : comidaData.price == 0 ? "" : <p className="pricevariable"> ${comidaData.priceVariable} </p>}
                 </div>
                 {
                     comidaData.tamanio ? ""

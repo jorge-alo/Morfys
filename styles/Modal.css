@@ -53,16 +53,25 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    
 }
 .container-modal__container-description {
     display: flex;
     width: 100%;
    align-items: center;
    gap: 10px;
+   
 }
-
-
+.container-modal__container-description div {
+    display: flex;
+    
+}
+.pricevariable {
+   
+    max-height: 100%;
+    display: flex;
+    align-items: end;
+}
 .modal-button {
     display: flex;
     justify-content: space-between;
@@ -145,7 +154,7 @@
      align-items: center;
     text-align: center;
     border-radius: 25px;
-    gap: 20px;
+    gap: 10px;
     font-size: 1.3rem;
 }
 

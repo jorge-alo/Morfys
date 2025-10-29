@@ -7,7 +7,7 @@ import { DataContext } from '../context/DataContext';
 import { ConfirmarEnvio } from './ConfirmarEnvio';
 
 export const Modal = () => {
-    const { comidaData, setModalIsTrue, selectedModalEnviar, setSelectedModalEnviar, setVariantesOpcionesSelecionadas } = useContext(DataContext);
+    const { comidaData, setContVariable, setModalIsTrue, selectedModalEnviar, setSelectedModalEnviar, setVariantesOpcionesSelecionadas } = useContext(DataContext);
     const [selectedVariante, setSelectedVariante] = useState(false);
     console.log("Valor de selectedModalEnviar en modal", selectedModalEnviar);
     const handleCloseModal = (e) => {
@@ -16,6 +16,7 @@ export const Modal = () => {
             setSelectedVariante(false);
             setSelectedModalEnviar(false);
             setVariantesOpcionesSelecionadas({});
+            setContVariable(0)
         }
     }
 
