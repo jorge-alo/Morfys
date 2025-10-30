@@ -87,13 +87,13 @@
     border: none;
     padding: 5px;
     border-radius: 4px;
-    background-color: #f53425;
+    background-color: #2389ef;
     color: #fff;
     font-size: 1.5rem;
 }
 
 .section-mipedido button:hover {
-    background-color: #a53425;
+    background-color: #2389cf;
     cursor: pointer;
 }
 

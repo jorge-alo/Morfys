@@ -82,7 +82,7 @@
     padding: 10px;
     border: none;
     border-radius: 4px;
-    background-color: #f53425;
+    background-color: #2389ef;
     color: #fff;
     font-size: 1.2rem;
 }
@@ -92,7 +92,7 @@
     padding: 10px;
     border: none;
     border-radius: 4px;
-    background-color: #f5342599;
+    background-color: #79b9ff99;
     color: #fff;
     font-size: 1rem;
 }
@@ -100,7 +100,7 @@
     flex-grow: 1;
 }
 .modal-button:hover {
-    background-color: #b53425;
+    background-color: #2389cf;
     cursor: pointer;
 }
 .modal-button p {

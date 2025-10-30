@@ -59,7 +59,7 @@ cursor: pointer;
 }
 .opcion-aceptar {
     border: none;
-    background-color: #f53425;
+    background-color: #2389ef;
     color: #fff;
     padding: 10px;
     border-radius: 4px;
@@ -67,7 +67,7 @@ cursor: pointer;
 
 .opcion-aceptar-disabled {
     border: none;
-    background-color: #f5342590;
+    background-color: #2389ef90;
     color: #fff;
     padding: 10px;
     border-radius: 4px;
