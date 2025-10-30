@@ -16,6 +16,8 @@ export const CardSelection = ({ setSelectedVariante }) => {
             setCont(prev => prev - 1);
         }
     }
+    console.log("Valor de cont en cardSelection", cont);
+    console.log("Valor de contVariable en cardSelection", contVariable);
     useEffect(() => {
 
         setComidaData(item => {
@@ -26,7 +28,8 @@ export const CardSelection = ({ setSelectedVariante }) => {
                 }
             }
             const priceVariable = Number(item.price) * Number(cont);
-            if (cont != item.cant && comidaData.variantesOpcionesSelecionadas) {
+            if (cont != item.cant ) {
+                console.log("hola");
                 setContVariable(0);
                 setVariantesOpcionesSelecionadas({});
                 const { variantesOpcionesSelecionadas, ...rest } = item;

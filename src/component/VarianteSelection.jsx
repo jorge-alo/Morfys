@@ -13,6 +13,7 @@ export const VarianteSelection = ({ setSelectedVariante }) => {
     const cantOpciones = limite && (limite * cantPedido);
     console.log("Valor de cantOpciones en VarianteSelection", cantOpciones);
     console.log("Valor de contVariable en VarianteSelection", contVariable);
+     console.log("Valor de variantesOpcionesSeleccionas en handleRestar", variantesOpcionesSelecionadas);
     const handleSumar = (opcion) => {
 
         if ((limite && contVariable >= cantOpciones)) {
@@ -48,13 +49,15 @@ export const VarianteSelection = ({ setSelectedVariante }) => {
                 }
             })
             setContVariable(prevCont => prevCont - 1);
-        }
-        setVariantesOpcionesSelecionadas(prev => {
+        }else{
+             setVariantesOpcionesSelecionadas(prev => {
             const nuevoEstado = { ...prev };
             delete nuevoEstado[opcion.nombre];
             return nuevoEstado;
         })
-
+        }
+       
+       
     }
 
     const handleOnclick = () => {
