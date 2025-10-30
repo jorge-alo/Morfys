@@ -52,8 +52,30 @@ export const Mipedido = () => {
   const handleClickModalMipedido = () => {
     setIsModalMipeddido(true);
   }
+
+  useEffect(() => {
+    if (isModalMipeddido) {
+      // Empuja un nuevo estado al historial cuando el modal se abre
+      window.history.pushState({ mipedido: true }, "");
+
+      const handlePopState = () => {
+        // Si el usuario toca "atrás" o hace el gesto, cerramos el modal
+        setIsModalMipeddido(false);
+      };
+
+      // Escuchamos el evento popstate
+      window.addEventListener("popstate", handlePopState);
+
+      // Cleanup cuando se desmonta o se cierra manualmente
+      return () => {
+        window.removeEventListener("popstate", handlePopState);
+      };
+    }
+  }, [isModalMipeddido]);
+
   const handleClickBack = () => {
     setIsModalMipeddido(false);
+     window.history.back(); // para mantener limpio el historial
   }
 
   return (
@@ -116,7 +138,7 @@ export const Mipedido = () => {
                 <h4> Subtotal </h4>
                 <h4> ${subtotal} </h4>
               </div>
-              <button className={ Number(resto.envioMinimo) > subtotal ? "button-falta-dinero" : undefined} onClick={handleEnviarPedido} disabled={ Number(resto.envioMinimo) > subtotal ? true : false}>
+              <button className={Number(resto.envioMinimo) > subtotal ? "button-falta-dinero" : undefined} onClick={handleEnviarPedido} disabled={Number(resto.envioMinimo) > subtotal ? true : false}>
                 {
                   Number(resto.envioMinimo) > subtotal
                     ?
