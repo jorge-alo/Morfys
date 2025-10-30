@@ -72,10 +72,10 @@ export const Mipedido = () => {
                   <div className='container-mipedido-data__container-description'>
                     <div className='container-mipedido-data__description'>
                       <div className='mipedido-data-description__nombre'>
-                        {item.tamanio ? "" : item.price == 0 ? "" : <h5> {item.cant}X </h5>}
+                        {item.tamanio ? "" : item.price == 0 ? "" : <h7> {item.cant}X </h7>}
                         <h5> {item.name} </h5>
                       </div>
-                      {item.tamanio ? "" : item.price == 0 ? "" : <h6> (${item.price}) </h6>}
+                      {item.tamanio ? "" : item.price == 0 ? "" : <h7> (${item.price}) </h7>}
                     </div>
                     {
                       item.variantesOpcionesSelecionadas
@@ -83,10 +83,10 @@ export const Mipedido = () => {
                         Object.entries(item.variantesOpcionesSelecionadas).map(([nombre, data]) => (
                           <div key={nombre} className='container-mipedido__opciones'>
                             <div className='mipedido-opciones__nombre'>
-                              <h6> {data.cantOpciones}X </h6>
+                              <h7> {data.cantOpciones}X </h7>
                               <h6> {nombre} </h6>
                             </div>
-                            <h6> {data.valor == 0 ? "" : `($${data.valor})`} </h6>
+                            <h7> {data.valor == 0 ? "" : `($${data.valor})`} </h7>
                           </div>
                         ))
 

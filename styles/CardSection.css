@@ -69,7 +69,7 @@
 .container-cardsection-card__data h3 {
     text-align: center;
     padding: 10px;
-   
+   font-size: 1.5rem;
 }
 .container-opciones {
    display: flex;
@@ -79,6 +79,8 @@
    padding: 5px;
    border-radius: 4px;
 }
+
+
 .container-opciones__data {
     
     width: 100%;
@@ -99,6 +101,7 @@
 }
 .card-data h4 {
     color: #666;
+    font-size: 1.2rem;
     font-weight: bold;
 }
 /*------------------------------media mobile---------------------------------*/

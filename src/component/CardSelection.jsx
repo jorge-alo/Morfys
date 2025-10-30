@@ -29,7 +29,6 @@ export const CardSelection = ({ setSelectedVariante }) => {
             }
             const priceVariable = Number(item.price) * Number(cont);
             if (cont != item.cant ) {
-                console.log("hola");
                 setContVariable(0);
                 setVariantesOpcionesSelecionadas({});
                 const { variantesOpcionesSelecionadas, ...rest } = item;
@@ -166,7 +165,7 @@ export const CardSelection = ({ setSelectedVariante }) => {
 
                                     :
                                     <div>
-                                        <h5>{ comidaData.price  == 0 ? "" : `${cont}X` }</h5>
+                                        <h7>{ comidaData.price  == 0 ? "" : `${cont}X` }</h7>
                                         <h5> {comidaData.name} </h5>
                                        { comidaData.price == 0 ? "" : <h5 className="container-modal__container-description_price"> (${comidaData.price}) </h5>}
                                     </div>

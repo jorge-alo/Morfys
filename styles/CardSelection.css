@@ -26,11 +26,12 @@
     cursor: pointer;
 }
 .container-modal h5, .container-modal h6 {
-    font-size: 1rem;
+    font-size: 1.2rem;
     color: #666;
 }
 
 .container-modal button {
-    font-size: 1rem;
+    font-size: 1.2rem;
+    padding: 10px;
 }
 
