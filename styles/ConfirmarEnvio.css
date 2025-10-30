@@ -19,11 +19,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-size: 1.5rem;
 }
 
 .container-modal__recibirpedido select {
     border: none;
     outline: none;
+     font-size: 1.2rem;
+      background-color: #efefef;
 }
 .container-modal__metododpago {
      border: 1px solid #ccc;
@@ -31,10 +34,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+     font-size: 1.5rem;
 }
 .container-modal__metododpago select {
     border: none;
     outline: none;
+     font-size: 1.2rem;
+     background-color: #efefef;
 }
 
 .mensaje-de-envio {
@@ -45,7 +51,7 @@
     gap: 10px;
     padding: 5px;
     border-radius: 4px;
-     font-size: 1rem;
+     font-size: 1.2rem;
 }
 
 .mensaje-de-envio__no-incluido {
@@ -59,6 +65,7 @@
     border: 1px solid #ccc;
     display: flex;
     gap: 10px;
+     font-size: 1.5rem;
 }
 .textarea-direccion textarea {
     flex-grow: 1;
