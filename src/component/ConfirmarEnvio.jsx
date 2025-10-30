@@ -60,7 +60,7 @@ export const ConfirmarEnvio = () => {
         ?
         <>
           <div className="mensaje-de-envio">
-            <p>Por favor, envíe su ubicación actual desde WhatsApp para mayor precisión en la entrega</p>
+            <p className="envioubicacion">Por favor, envíe su ubicación actual desde WhatsApp para mayor precisión en la entrega</p>
             <p className="mensaje-de-envio__no-incluido">*Precio de envio no incluido en el total*</p>
           </div>
           <div className="textarea-direccion">
