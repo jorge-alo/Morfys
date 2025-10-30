@@ -36,7 +36,7 @@ export const VarianteSelection = ({ setSelectedVariante }) => {
 
     const handleRestar = (opcion) => {
 
-        if (variantesOpcionesSelecionadas[opcion.nombre].cantOpciones > 0) {
+        if (variantesOpcionesSelecionadas[opcion.nombre]?.cantOpciones > 0) {
             setVariantesOpcionesSelecionadas(prev => {
                 const nuevoValor = prev[opcion.nombre].cantOpciones - 1;
                 return {

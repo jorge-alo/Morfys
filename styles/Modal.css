@@ -64,7 +64,12 @@
 }
 .container-modal__container-description div {
     display: flex;
-    
+    align-items: center;
+    gap: 5px;
+}
+
+.container-modal__container-description .container-modal__container-description_price {
+    font-size: clamp(.75rem, 2.2dvw, 1.2rem);
 }
 .pricevariable {
    
@@ -176,3 +181,4 @@ display: flex;
 align-items: center;
 gap: 5px;
 }
+

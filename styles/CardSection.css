@@ -7,7 +7,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 20px 10px;
     border: 1px solid #ccc;
     border-radius: 8px;
     margin-top: 10px;
@@ -29,16 +29,18 @@
 .container-cardsection-card__data {
     display: flex;
     flex-direction: column;
-    max-width: 400px;
+    max-width: 300px;
+    width: 100%;
     height: fit-content;
     border: 1px solid #ccc;
     border-radius: 4px;
-    margin: 20px;
+    
     padding: 10px;
     box-shadow: 0 0 10px #ccc;
 }
 .card-data {
     display: flex;
+    width: 100%;
     gap: 10px;
 }
 
@@ -71,14 +73,14 @@
 }
 .container-opciones {
    display: flex;
+   width: 100%;
    flex-direction: column;
    justify-content: center;
-   
    padding: 5px;
    border-radius: 4px;
 }
 .container-opciones__data {
-    min-width: 200px;
+    
     width: 100%;
     display: flex;
     justify-content: space-between;

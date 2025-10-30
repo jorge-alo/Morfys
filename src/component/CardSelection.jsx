@@ -101,8 +101,9 @@ export const CardSelection = ({ setSelectedVariante }) => {
     console.log("Valor de varianteOpcionesSeleccionadas en cardSelection", variantesOpcionesSelecionadas);
 
     const handleTamañoRestar = (opcion) => {
-        setVariantesOpcionesSelecionadas(prev => {
-            if (prev[opcion.nombre].cantOpciones > 0) {
+    if (variantesOpcionesSelecionadas[opcion.nombre]?.cantOpciones > 0){
+          setVariantesOpcionesSelecionadas(prev => {
+                
 
                 const nuevoValor = prev[opcion.nombre].cantOpciones - 1;
                 const actualizado = {
@@ -124,12 +125,14 @@ export const CardSelection = ({ setSelectedVariante }) => {
                     )
                 }
                 return actualizado;
-            } else {
-                return prev
-            }
-
+            })
+         } 
+         
+         setVariantesOpcionesSelecionadas(prev => {
+            const nuevoEstado = { ...prev };
+            delete nuevoEstado[opcion.nombre];
+            return nuevoEstado;
         })
-
     }
     const price = comidaData.variantesOpcionesSelecionadas
         ?

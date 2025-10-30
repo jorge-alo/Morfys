@@ -84,7 +84,7 @@ export const CardSection = ({ comidas }) => {
                             {comida.variantes[0].opciones.map((op, index) => {
                               if (op.standby != 1) {
                                 return <div key={index} className='container-opciones__data'>
-                                  <p > {op.nombre}:</p> <p>${op.precio_adicional} </p>
+                                  <p > {op.nombre}:</p> <p>${Math.floor(op.precio_adicional)} </p>
                                 </div>
                               }
                               return null
