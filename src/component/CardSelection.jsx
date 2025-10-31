@@ -291,7 +291,7 @@ export const CardSelection = ({ setSelectedVariante }) => {
                             :
                             <p> Agregar a mi pedido</p>
                 }
-                <p> ${price ?? 0} </p>
+                 {price == 0 ? '' :  <p> ${price}</p>} 
             </button>
         </div >
     )

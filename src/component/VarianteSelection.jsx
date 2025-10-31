@@ -97,7 +97,7 @@ export const VarianteSelection = ({ setSelectedVariante }) => {
                     {comidaData.variantes[0].opciones.map((opcion, index) => (
                         opcion.standby !== 1 &&
                         <div key={opcion.id} className='container-opcion'>
-                            <div> {opcion.nombre} <p> ${opcion.precio_adicional} </p> </div>
+                            <div> {opcion.nombre} <p> ${Math.floor(opcion.precio_adicional)} </p> </div>
                             <div className='container-opcion__unidades'>
                                 <span onClick={() => handleRestar(opcion)} >-</span>
                                 <p> {variantesOpcionesSelecionadas[opcion.nombre] ? variantesOpcionesSelecionadas[opcion.nombre].cantOpciones : 0} </p>
