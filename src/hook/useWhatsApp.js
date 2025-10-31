@@ -4,7 +4,7 @@ import { useCallback } from "react"
 export const useWhatsApp = () => {
   const enviarPedido = useCallback((cel, metodoEntrega, metodoPago, direccion, pedido) => {
     console.log("Valor de cel, metodoEntrega,metodoPago, direccion", cel, metodoEntrega, metodoPago, direccion);
-
+    console.log("Valor de pedidos en useWhatsApp", pedido);
     const fecha = new Date().toLocaleString('es-PE', {
         day: '2-digit',
         month: '2-digit',
@@ -19,10 +19,10 @@ export const useWhatsApp = () => {
       `Método de pago: ${metodoPago}\n` +
       (metodoEntrega === 'envienmelo' ? `Ubicación: ${direccion}\n` : '') +
       `Pedido:\n${pedido.map(p => {
-        const lineaPrincipal = ` ${p.tamanio || p.price == 0 ? "" : p.cant} ${p.name} ${p.tamanio || p.price ? "" : '$' + p.priceVariable}`;
+        const lineaPrincipal = ` ${p.tamanio || p.price == 0 ? "" : p.cant + 'x'} ${p.name} ${p.tamanio || p.price == 0 ? "" : '$' + p.priceVariable}`;
         const variantes = p.variantes?.length > 0
           ? `${p.variantes[0].nombre}:\n` + Object.entries(p.variantesOpcionesSelecionadas).map(([nombre, valor]) =>
-            `  ${valor.cantOpciones}x ${nombre} $${valor.valor}`
+            `  ${valor.cantOpciones}x ${nombre} ${valor.valor == 0 ? "" : '$'+valor.valor} `
           ).join('\n')
           : '';
         return `${lineaPrincipal}${variantes ? '\n' + variantes : ''}`;
