@@ -135,17 +135,17 @@
     }
      .modal-section-mipedido {
         display: flex;
-        flex-direction: column;
-       padding: 10px 5px;
-       gap: 10px;
-        position: fixed;
-        background-color: #fff;
-        top: 40px;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        z-index: 100000;
-        border: 2px solid #333;
+    flex-direction: column;
+    padding: 10px 5px;
+    position: fixed;
+    background-color: #fff;
+    top: 40px;
+    left: 0;
+    height: calc(100% - 40px); /* toma toda la pantalla menos el top */
+    width: 100%;
+    z-index: 100000;
+    border: 2px solid #333;
+    border-radius: 4px;
     }
 .section-mipedido__container{
     display: none;
@@ -155,10 +155,11 @@
     flex-direction: column;
     border: 1px solid #ccc;
     padding: 5px;
-    height: fit-content;
+     height: 80vh; /* ocupa máximo el 80% de la pantalla */
     border-radius: 4px;
     min-width: 300px;
     z-index: 1000000;
+    overflow-y: auto; /* permite hacer scroll vertical */
 }
    
  
