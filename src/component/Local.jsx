@@ -27,7 +27,7 @@ export const Local = () => {
         } catch (error) {
             console.log("Error al cargar los datos", error);
             if(error.response.data.status === "expired"){
-                setExpired(error.data.status);
+                setExpired(error.response.data.status);
                 return;
            }
         }
