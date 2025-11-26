@@ -20,7 +20,7 @@ export const Local = () => {
     const loadLocal = async () => {
         try {
             const result = await getDataComida(name);
-           
+           console.log("Valor de resul", result);
            if(result.data.status === "expired"){
                 setExpired(result.data.status);
                 return;
