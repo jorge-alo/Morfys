@@ -14,7 +14,7 @@ export const Local = () => {
     const { name } = useParams();
     const [comidas, setComidas] = useState([]);
     const [logo, setLogo] = useState(null);
-    const [expired, setExpired] = useState(second)
+    const [expired, setExpired] = useState(null);
     
 
     const loadLocal = async () => {
