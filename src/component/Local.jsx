@@ -20,16 +20,16 @@ export const Local = () => {
     const loadLocal = async () => {
         try {
             const result = await getDataComida(name);
-           console.log("Valor de resul", result);
-           if(result.data.status === "expired"){
-                setExpired(result.data.status);
-                return;
-           }
+           
             setComidas(result.data.comidas);
             setLogo(result.data.logo);
             console.log("Valor de result en loadLocal", result);
         } catch (error) {
             console.log("Error al cargar los datos", error);
+            if(result.data.status === "expired"){
+                setExpired(error.data.status);
+                return;
+           }
         }
 
     }
