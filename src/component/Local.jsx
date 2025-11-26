@@ -7,17 +7,24 @@ import { CardSection } from "./CardSection";
 import { Mipedido } from "./Mipedido";
 import '../../styles/Local.css'
 import { Modal } from "./Modal";
+import { ModalExpired } from "./ModalExpired";
 
 export const Local = () => {
     const { getDataComida, modalIsTrue, setModalIsTrue } = useContext(DataContext);
     const { name } = useParams();
     const [comidas, setComidas] = useState([]);
     const [logo, setLogo] = useState(null);
+    const [expired, setExpired] = useState(second)
     
 
     const loadLocal = async () => {
         try {
             const result = await getDataComida(name);
+           
+           if(result.data.status === "expired"){
+                setExpired(result.data.status);
+                return;
+           }
             setComidas(result.data.comidas);
             setLogo(result.data.logo);
             console.log("Valor de result en loadLocal", result);
@@ -32,6 +39,7 @@ export const Local = () => {
 
     return (
         <div className="container-local">
+            { expired && <ModalExpired/>}
             <Banner logo={logo} name={name} />
             <div className="container-local-section">
                 <Categorias comidas={comidas} />
