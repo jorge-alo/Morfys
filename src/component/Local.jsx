@@ -26,7 +26,7 @@ export const Local = () => {
             console.log("Valor de result en loadLocal", result);
         } catch (error) {
             console.log("Error al cargar los datos", error);
-            if(result.data.status === "expired"){
+            if(error.data.status === "expired"){
                 setExpired(error.data.status);
                 return;
            }
