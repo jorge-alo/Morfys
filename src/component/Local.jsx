@@ -42,7 +42,7 @@ export const Local = () => {
     return (
         <div className="container-local">
             { expired && <ModalExpired/>}
-            <Banner baner={baner} name={name} />
+            <Banner baner={baner} name={name} logo={logo}/>
             <div className="container-local-section">
                 <Categorias comidas={comidas} />
                 <CardSection comidas={comidas} logo={logo}/>

@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import '../../styles/Banner.css'
 import { DataContext } from '../context/DataContext';
 
-export const Banner = ({ baner, name }) => {
+export const Banner = ({ baner, name, logo }) => {
     const { getDataResto } = useContext(DataContext);
     const [resto, setResto] = useState("");
 
@@ -28,12 +28,20 @@ export const Banner = ({ baner, name }) => {
         <section
             className='section-banner'
             style={{
-                backgroundImage: `url(${banner})` 
+                backgroundImage: `url(${banner})`
             }}
         >
 
             <div className='container-data-banner'>
-                <h2>{name}</h2>
+                {
+                    logo ?
+                        <div>
+                            <img src={logo} alt={`Logo de ${name}`} />
+                        </div>
+                        :
+                        <h2>{name}</h2>
+                }
+
                 <div className='container-horario-resto'>
                     {
                         resto &&
