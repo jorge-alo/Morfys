@@ -35,7 +35,7 @@ export const Banner = ({ baner, name, logo }) => {
             <div className='container-data-banner'>
                 {
                     logo ?
-                        <div>
+                        <div className='logo-en-baner'>
                             <img src={logo} alt={`Logo de ${name}`} />
                         </div>
                         :

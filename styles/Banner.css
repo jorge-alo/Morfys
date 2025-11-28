@@ -20,7 +20,23 @@
     justify-content: space-between;
     align-items: end;
 }
-
+.logo-en-baner {
+     max-width: 100px;
+    min-width: 100px;
+    width: 100%;
+    min-height: 75px;
+    max-height: 100px;
+    height: 100%;
+    overflow: hidden;
+}
+.logo-en-baner img {
+     max-width: 100px;
+    min-width: 100px;
+    max-height: 100px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 .section-banner h2 {
     color: #fff;
     font-size: clamp(1rem, 2vw, 2rem);
@@ -60,6 +76,7 @@
     .container-data-banner {
         flex-direction: column;
         align-items: start;
+        gap: 10px;
     }
 
     .container-horario-resto {
