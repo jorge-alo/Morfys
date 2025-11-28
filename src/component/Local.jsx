@@ -45,7 +45,7 @@ export const Local = () => {
             <Banner baner={baner} name={name} />
             <div className="container-local-section">
                 <Categorias comidas={comidas} />
-                <CardSection comidas={comidas} />
+                <CardSection comidas={comidas} logo={logo}/>
                 <Mipedido />
             </div>
             {

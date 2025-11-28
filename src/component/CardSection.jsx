@@ -2,7 +2,7 @@ import { useContext, useMemo, useState } from 'react';
 import '../../styles/CardSection.css'
 import { DataContext } from '../context/DataContext';
 
-export const CardSection = ({ comidas }) => {
+export const CardSection = ({ comidas, logo }) => {
   const [categoriaAbierta, setCategoriaAbierta] = useState(null);
   const { setComidaData, setModalIsTrue, pedido } = useContext(DataContext);
 
@@ -71,14 +71,18 @@ export const CardSection = ({ comidas }) => {
 
                       {
                         comida.image
-                        &&
-                        <div className="container-cardsection__image">
-                          <img src={comida.image} alt={comida.image} />
-                        </div>
+                          ?
+                          <div className="container-cardsection__image">
+                            <img src={comida.image} alt={comida.image} />
+                          </div>
+                          :
+                          <div className="container-cardsection__image">
+                            <img src={logo}  />
+                          </div>
                       }
                       {
                         comida.price == 0 && comida.variantes.length > 0
-                        ?                     
+                          ?
                           <div className='container-opciones'>
                             <h4> {comida.description} </h4>
                             {comida.variantes[0].opciones.map((op, index) => {
@@ -90,11 +94,11 @@ export const CardSection = ({ comidas }) => {
                               return null
                             })}
                           </div>
-                          : 
+                          :
                           <div className='container-opciones__sinvariantes'>
                             <h4> {comida.description} </h4>
                             <p> precio: ${comida.price} </p>
-                          </div>                       
+                          </div>
                       }
                     </div>
                   </div>
