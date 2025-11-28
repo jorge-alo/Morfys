@@ -31,7 +31,7 @@ export const CardSection = ({ comidas }) => {
   const categoriasOrdenadas = useMemo(() => {
     const categoriasEntries = comidasPorCategorias ? Object.entries(comidasPorCategorias) : null;
     const resultado = [];
-    if (comidasPorCategorias?.length && comidasPorCategorias["menu"]) {
+    if (comidasPorCategorias && comidasPorCategorias["menu"]) {
       resultado.push(["menu", comidasPorCategorias["menu"]]);
     }
     if (categoriasEntries) {
