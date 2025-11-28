@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import '../../styles/Banner.css'
 import { DataContext } from '../context/DataContext';
 
-export const Banner = ({ logo, name }) => {
+export const Banner = ({ baner, name }) => {
     const { getDataResto } = useContext(DataContext);
     const [resto, setResto] = useState("");
 
@@ -22,14 +22,13 @@ export const Banner = ({ logo, name }) => {
         handleGetDataResto()
     }, [name])
 
-    if (!logo) return null;
-    const banner = `${logo}`
+    const banner = baner ? `${baner}` : 'https://res.cloudinary.com/dmnqe1fmn/image/upload/fondoBaner_zeeidl.webp'
     console.log("Valor de banner en Baner", banner);
     return (
         <section
             className='section-banner'
             style={{
-                backgroundImage: `url(${banner})`
+                backgroundImage: `url(${banner})` 
             }}
         >
 

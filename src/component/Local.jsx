@@ -14,6 +14,7 @@ export const Local = () => {
     const { name } = useParams();
     const [comidas, setComidas] = useState([]);
     const [logo, setLogo] = useState(null);
+    const [baner, setBaner] = useState(null);
     const [expired, setExpired] = useState(null);
     
 
@@ -23,6 +24,7 @@ export const Local = () => {
            
             setComidas(result.data.comidas);
             setLogo(result.data.logo);
+            setBaner(result.data.baner);
             console.log("Valor de result en loadLocal", result);
         } catch (error) {
             console.log("Error al cargar los datos", error);
@@ -40,7 +42,7 @@ export const Local = () => {
     return (
         <div className="container-local">
             { expired && <ModalExpired/>}
-            <Banner logo={logo} name={name} />
+            <Banner baner={baner} name={name} />
             <div className="container-local-section">
                 <Categorias comidas={comidas} />
                 <CardSection comidas={comidas} />
