@@ -39,6 +39,19 @@ export const Local = () => {
         loadLocal()
     }, [name])
 
+    
+    useEffect(() => {
+  if (modalIsTrue) {
+    document.body.style.overflow = "hidden"; // bloquea scroll de fondo
+  } else {
+    document.body.style.overflow = "";
+  }
+
+  return () => {
+    document.body.style.overflow = "";
+  };
+}, [modalIsTrue]);
+
     return (
         <div className="container-local">
             { expired && <ModalExpired/>}
