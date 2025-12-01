@@ -2,8 +2,8 @@ import { useContext, useMemo, useState } from 'react';
 import '../../styles/CardSection.css'
 import { DataContext } from '../context/DataContext';
 
-export const CardSection = ({ comidas, logo }) => {
-  const [categoriaAbierta, setCategoriaAbierta] = useState(null);
+export const CardSection = ({ comidas, logo, handleclickCardISTrue, categoriaAbierta }) => {
+  
   const { setComidaData, setModalIsTrue, pedido } = useContext(DataContext);
 
   console.log("Valor de comidas en cardSection", comidas);
@@ -45,9 +45,7 @@ export const CardSection = ({ comidas, logo }) => {
     return resultado;
   }, [comidasPorCategorias])
 
-  const handleclickCardISTrue = (cat) => {
-    setCategoriaAbierta(prev => prev == cat ? null : cat);
-  }
+  
 
   return (
     <section className='container-cardsection'>

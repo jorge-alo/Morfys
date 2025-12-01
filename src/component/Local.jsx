@@ -16,6 +16,7 @@ export const Local = () => {
     const [logo, setLogo] = useState(null);
     const [baner, setBaner] = useState(null);
     const [expired, setExpired] = useState(null);
+    const [categoriaAbierta, setCategoriaAbierta] = useState(null);
     
 
     const loadLocal = async () => {
@@ -39,7 +40,7 @@ export const Local = () => {
         loadLocal()
     }, [name])
 
-    
+
     useEffect(() => {
   if (modalIsTrue) {
     document.body.style.overflow = "hidden"; // bloquea scroll de fondo
@@ -52,13 +53,17 @@ export const Local = () => {
   };
 }, [modalIsTrue]);
 
+const handleclickCardISTrue = (cat) => {
+    setCategoriaAbierta(prev => prev == cat ? null : cat);
+  }
+
     return (
         <div className="container-local">
             { expired && <ModalExpired/>}
             <Banner baner={baner} name={name} logo={logo}/>
             <div className="container-local-section">
-                <Categorias comidas={comidas} />
-                <CardSection comidas={comidas} logo={logo}/>
+                <Categorias comidas={comidas} handleclickCardISTrue= {handleclickCardISTrue} />
+                <CardSection categoriaAbierta={categoriaAbierta} comidas={comidas} logo={logo} handleclickCardISTrue= {handleclickCardISTrue} />
                 <Mipedido />
             </div>
             {

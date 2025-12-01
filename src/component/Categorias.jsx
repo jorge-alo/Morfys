@@ -1,6 +1,6 @@
 import '../../styles/Categorias.css'
 
-export const Categorias = ({ comidas }) => {
+export const Categorias = ({ comidas, handleclickCardISTrue }) => {
 
   const categoriasUnicas = [];
   comidas?.forEach(comida => {
@@ -22,7 +22,7 @@ export const Categorias = ({ comidas }) => {
         <div className='container-categorias-mobile__items'>
           <div>
             {categoriasUnicas.map((cat, index) => (
-              <a key={index} href={`#${cat.replace(/\s+/g, '-')} `} > {cat} </a>
+              <a key={index} href={`#${cat.replace(/\s+/g, '-')} `}  onClick={() => handleclickCardISTrue(cat)}> {cat} </a>
             ))}
           </div>
         </div>
