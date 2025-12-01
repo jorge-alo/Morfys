@@ -8,6 +8,7 @@ export const DataProvider = ({ children }) => {
   const [pedido, setPedido] = useState([]);
   const [selectedModalEnviar, setSelectedModalEnviar] = useState(false);
   const [contVariable, setContVariable] = useState(0);
+  const [logo, setLogo] = useState(null);
   const [variantesOpcionesSelecionadas, setVariantesOpcionesSelecionadas] = useState({});
 
 
@@ -41,7 +42,7 @@ export const DataProvider = ({ children }) => {
     return result
   }
   return (
-    <DataContext.Provider value={{ contVariable, setContVariable, valueInputEnvio, variantesOpcionesSelecionadas, setVariantesOpcionesSelecionadas, handleChange, getDataComida, getDataResto, selectedModalEnviar, setSelectedModalEnviar, comidaData, setComidaData, modalIsTrue, setModalIsTrue, pedido, setPedido }}>
+    <DataContext.Provider value={{logo, setLogo, contVariable, setContVariable, valueInputEnvio, variantesOpcionesSelecionadas, setVariantesOpcionesSelecionadas, handleChange, getDataComida, getDataResto, selectedModalEnviar, setSelectedModalEnviar, comidaData, setComidaData, modalIsTrue, setModalIsTrue, pedido, setPedido }}>
       {children}
     </DataContext.Provider>
   )

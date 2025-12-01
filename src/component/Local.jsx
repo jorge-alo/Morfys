@@ -10,10 +10,9 @@ import { Modal } from "./Modal";
 import { ModalExpired } from "./ModalExpired";
 
 export const Local = () => {
-    const { getDataComida, modalIsTrue, setModalIsTrue } = useContext(DataContext);
+    const { getDataComida, modalIsTrue, logo, setLogo } = useContext(DataContext);
     const { name } = useParams();
     const [comidas, setComidas] = useState([]);
-    const [logo, setLogo] = useState(null);
     const [baner, setBaner] = useState(null);
     const [expired, setExpired] = useState(null);
     const [categoriaAbierta, setCategoriaAbierta] = useState(null);
@@ -63,7 +62,7 @@ const handleclickCardISTrue = (cat) => {
             <Banner baner={baner} name={name} logo={logo}/>
             <div className="container-local-section">
                 <Categorias comidas={comidas} handleclickCardISTrue= {handleclickCardISTrue} />
-                <CardSection categoriaAbierta={categoriaAbierta} comidas={comidas} logo={logo} handleclickCardISTrue= {handleclickCardISTrue} />
+                <CardSection categoriaAbierta={categoriaAbierta} comidas={comidas} handleclickCardISTrue= {handleclickCardISTrue} />
                 <Mipedido />
             </div>
             {

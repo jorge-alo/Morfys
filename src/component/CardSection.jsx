@@ -2,9 +2,9 @@ import { useContext, useMemo, useState } from 'react';
 import '../../styles/CardSection.css'
 import { DataContext } from '../context/DataContext';
 
-export const CardSection = ({ comidas, logo, handleclickCardISTrue, categoriaAbierta }) => {
+export const CardSection = ({ comidas,  handleclickCardISTrue, categoriaAbierta }) => {
   
-  const { setComidaData, setModalIsTrue, pedido } = useContext(DataContext);
+  const { setComidaData, setModalIsTrue, pedido, logo } = useContext(DataContext);
 
   console.log("Valor de comidas en cardSection", comidas);
   console.log("Valor de pedido en cardSection", pedido);

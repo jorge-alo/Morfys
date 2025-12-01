@@ -3,7 +3,7 @@ import { DataContext } from "../context/DataContext";
 import '../../styles/CardSelection.css'
 
 export const CardSelection = ({ setSelectedVariante }) => {
-    const { comidaData, setComidaData, setModalIsTrue, setPedido, variantesOpcionesSelecionadas, setVariantesOpcionesSelecionadas, contVariable, setContVariable } = useContext(DataContext);
+    const { comidaData, setComidaData, setModalIsTrue, setPedido, variantesOpcionesSelecionadas, setVariantesOpcionesSelecionadas, contVariable, setContVariable, logo } = useContext(DataContext);
     const [cont, setCont] = useState(() => comidaData.cant || 1);
 
 
@@ -28,7 +28,7 @@ export const CardSelection = ({ setSelectedVariante }) => {
                 }
             }
             const priceVariable = Number(item.price) * Number(cont);
-            if (cont != item.cant ) {
+            if (cont != item.cant) {
                 setContVariable(0);
                 setVariantesOpcionesSelecionadas({});
                 const { variantesOpcionesSelecionadas, ...rest } = item;
@@ -103,9 +103,9 @@ export const CardSelection = ({ setSelectedVariante }) => {
     console.log("Valor de varianteOpcionesSeleccionadas en cardSelection", variantesOpcionesSelecionadas);
 
     const handleTamañoRestar = (opcion) => {
-    if (variantesOpcionesSelecionadas[opcion.nombre]?.cantOpciones > 0){
-          setVariantesOpcionesSelecionadas(prev => {
-                
+        if (variantesOpcionesSelecionadas[opcion.nombre]?.cantOpciones > 0) {
+            setVariantesOpcionesSelecionadas(prev => {
+
 
                 const nuevoValor = prev[opcion.nombre].cantOpciones - 1;
                 const actualizado = {
@@ -128,9 +128,9 @@ export const CardSelection = ({ setSelectedVariante }) => {
                 }
                 return actualizado;
             })
-         } 
-         
-         setVariantesOpcionesSelecionadas(prev => {
+        }
+
+        setVariantesOpcionesSelecionadas(prev => {
             const nuevoEstado = { ...prev };
             delete nuevoEstado[opcion.nombre];
             return nuevoEstado;
@@ -151,9 +151,16 @@ export const CardSelection = ({ setSelectedVariante }) => {
                         ? comidaData.name
                         : comidaData.categoria}
                 </h3>
-                <div className="container-modal__image">
-                    <img src={comidaData.image} />
-                </div>
+                {
+                    comidaData.image
+                        ? <div className="container-modal__image">
+                            <img src={comidaData.image} />
+                        </div>
+                        : <div className="container-modal__image">
+                            <img src={logo} />
+                        </div>
+                }
+
                 <div className='container-modal__description'>
                     <div className='description'>
                         <div className="container-modal__container-description">
@@ -165,9 +172,9 @@ export const CardSelection = ({ setSelectedVariante }) => {
 
                                     :
                                     <div>
-                                        <h7>{ comidaData.price  == 0 ? "" : `${cont}X` }</h7>
+                                        <h7>{comidaData.price == 0 ? "" : `${cont}X`}</h7>
                                         <h5> {comidaData.name} </h5>
-                                       { comidaData.price == 0 ? "" : <h5 className="container-modal__container-description_price"> (${comidaData.price}) </h5>}
+                                        {comidaData.price == 0 ? "" : <h5 className="container-modal__container-description_price"> (${comidaData.price}) </h5>}
                                     </div>
                             }
 
@@ -231,16 +238,16 @@ export const CardSelection = ({ setSelectedVariante }) => {
                     ? ""
                     :
                     comidaData.price == 0
-                    ? ""
-                    :
-                    <div className='container-unidades'>
-                        <p>Unidades</p>
-                        <div>
-                            <span onClick={handleRestar} >-</span>
-                            <p> {cont} </p>
-                            <span onClick={handleSumar}>+</span>
+                        ? ""
+                        :
+                        <div className='container-unidades'>
+                            <p>Unidades</p>
+                            <div>
+                                <span onClick={handleRestar} >-</span>
+                                <p> {cont} </p>
+                                <span onClick={handleSumar}>+</span>
+                            </div>
                         </div>
-                    </div>
             }
 
             <button
@@ -267,7 +274,7 @@ export const CardSelection = ({ setSelectedVariante }) => {
                         ?
                         !(comidaData.variantesOpcionesSelecionadas && Object.entries(comidaData.variantesOpcionesSelecionadas).length > 0)
                         :
-                        comidaData.variantes && comidaData.variantes.length > 0 
+                        comidaData.variantes && comidaData.variantes.length > 0
                             ? Object.keys(comidaData.variantesOpcionesSelecionadas || {}).length === 0
                             : false
                 }
@@ -283,7 +290,7 @@ export const CardSelection = ({ setSelectedVariante }) => {
                         :
                         comidaData.variantes && comidaData.variantes.length > 0
                             ?
-                             Object.keys(comidaData.variantesOpcionesSelecionadas || {}).length > 0
+                            Object.keys(comidaData.variantesOpcionesSelecionadas || {}).length > 0
                                 ?
                                 <p> Agregar a mi pedido</p>
                                 :
@@ -291,7 +298,7 @@ export const CardSelection = ({ setSelectedVariante }) => {
                             :
                             <p> Agregar a mi pedido</p>
                 }
-                 {price == 0 ? '' :  <p> ${price}</p>} 
+                {price == 0 ? '' : <p> ${price}</p>}
             </button>
         </div >
     )
