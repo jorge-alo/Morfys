@@ -36,7 +36,7 @@ export const useWhatsApp = () => {
           : '';
         return `${lineaPrincipal}${variantes ? '\n' + variantes : ''}`;
       }).join('\n-------------------\n')}\n\n` +
-      `Total: $${pedido.reduce((sum, item) => sum + (item.totalComida ? Number(item.totalComida) : Number(item.priceVariable)), 0)}`;
+      `Total: 🧾$${pedido.reduce((sum, item) => sum + (item.totalComida ? Number(item.totalComida) : Number(item.priceVariable)), 0)}`;
 
     // Codificación correcta del mensaje (conserva emojis)
     const mensajeCodificado = encodeURIComponent(mensaje)
