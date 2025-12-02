@@ -25,12 +25,12 @@
 .container-tamaño-opcion-seleccion__sumar-restar span:hover {
     cursor: pointer;
 }
-.container-modal h5, .container-modal h6 {
+.container-modal h5 {
     font-size: 1.2rem;
     color: #666;
 }
 
-.container-modal h6 {
+.container-modal h6, .container-modal h7 {
     font-size: 1rem;
     color: #666;
 }
