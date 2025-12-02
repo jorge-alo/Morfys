@@ -179,7 +179,6 @@ export const CardSelection = ({ setSelectedVariante }) => {
                             }
 
                         </div>
-                        <h5> {comidaData.description} </h5>
                     </div>
                     {comidaData.tamanio ? "" : comidaData.price == 0 ? "" : <p className="pricevariable"> ${comidaData.priceVariable} </p>}
                 </div>
