@@ -80,7 +80,15 @@
     display: flex;
     gap: 10px;
 }
-
+.container-totalcomida-eliminar {
+    display: flex;
+    align-items: flex-start;
+    padding: 5px;
+    gap: 5px;
+}
+.container-totalcomida-eliminar h5 {
+    padding: 3px 0;
+}
 .eliminaritem {
     font-size: .8rem;
     border: 1px solid #ccc;

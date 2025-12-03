@@ -75,7 +75,7 @@ export const Mipedido = () => {
 
   const handleClickBack = () => {
     setIsModalMipeddido(false);
-     window.history.back(); // para mantener limpio el historial
+    window.history.back(); // para mantener limpio el historial
   }
 
   return (
@@ -115,8 +115,10 @@ export const Mipedido = () => {
                         : ""
                     }
                   </div>
-                  <h5> ${item.totalComida ? item.totalComida : item.priceVariable}</h5>
-                  <span className='eliminaritem' onClick={() => handleEliminar(item.id)}>❌</span>
+                  <div className='container-totalcomida-eliminar'>
+                    <h5> ${item.totalComida ? item.totalComida : item.priceVariable}</h5>
+                    <span className='eliminaritem' onClick={() => handleEliminar(item.id)}>❌</span>
+                  </div>
                 </div>
               ))
               :
