@@ -24,7 +24,7 @@ export const Local = () => {
            
             setComidas(result.data.comidas);
             setLogo(result.data.logo);
-            setBaner(result.data.baner);
+            setBaner(result.data.banner);
             console.log("Valor de result en loadLocal", result);
         } catch (error) {
             console.log("Error al cargar los datos", error);
