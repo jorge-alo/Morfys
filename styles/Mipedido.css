@@ -48,13 +48,19 @@
 }
 .container-mipedido-data__container-description {
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .container-mipedido-data__description {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 10px;
-    justify-content: space-between;
+    gap: 5px;
+    background-color: #f5c4c4;
+    padding: 5px 10px;
+    border-radius: 4px;
 }
 
 .mipedido-data-description__nombre {
@@ -67,6 +73,7 @@
     align-items: center;
     gap: 10px;
     justify-content: space-between;
+    margin-left: 30px;
 }
 
 .mipedido-opciones__nombre {
@@ -76,6 +83,10 @@
 
 .eliminaritem {
     font-size: .8rem;
+    border: 1px solid #ccc;
+    height: fit-content;
+    padding: 3px;
+    border-radius: 4px;
 }
 
 .eliminaritem:hover {
