@@ -13,7 +13,7 @@ export const VarianteSelection = ({ setSelectedVariante }) => {
     const cantOpciones = limite && (limite * cantPedido);
     console.log("Valor de cantOpciones en VarianteSelection", cantOpciones);
     console.log("Valor de contVariable en VarianteSelection", contVariable);
-     console.log("Valor de variantesOpcionesSeleccionas en handleRestar", variantesOpcionesSelecionadas);
+    console.log("Valor de variantesOpcionesSeleccionas en handleRestar", variantesOpcionesSelecionadas);
     const handleSumar = (opcion) => {
 
         if ((limite && contVariable >= cantOpciones)) {
@@ -40,6 +40,11 @@ export const VarianteSelection = ({ setSelectedVariante }) => {
         if (variantesOpcionesSelecionadas[opcion.nombre]?.cantOpciones > 0) {
             setVariantesOpcionesSelecionadas(prev => {
                 const nuevoValor = prev[opcion.nombre].cantOpciones - 1;
+                if (nuevoValor == 0) {
+                    const nuevoEstado = { ...prev };
+                    delete nuevoEstado[opcion.nombre];
+                    return nuevoEstado;
+                }
                 return {
                     ...prev,
                     [opcion.nombre]: {
@@ -49,15 +54,16 @@ export const VarianteSelection = ({ setSelectedVariante }) => {
                 }
             })
             setContVariable(prevCont => prevCont - 1);
-        }else{
-             setVariantesOpcionesSelecionadas(prev => {
-            const nuevoEstado = { ...prev };
-            delete nuevoEstado[opcion.nombre];
-            return nuevoEstado;
-        })
+        } else {
+            setVariantesOpcionesSelecionadas(prev => {
+                const nuevoEstado = { ...prev };
+                delete nuevoEstado[opcion.nombre];
+                return nuevoEstado;
+                console.log("Valor de variantesOpcionesSeleccionadas en handleRestar en cont 0", variantesOpcionesSelecionadas);
+            })
         }
-       
-       
+
+
     }
 
     const handleOnclick = () => {
