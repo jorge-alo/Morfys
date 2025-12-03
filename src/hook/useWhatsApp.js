@@ -27,14 +27,14 @@ export const useWhatsApp = () => {
       `Forma de entrega:  ${iconoEntrega} ${metodoEntrega === 'local' ? 'Retira en el local' : 'Envió a domicilio'}\n` +
       `Método de pago: ${iconoPago} ${metodoPago}\n` +
       (metodoEntrega === 'envienmelo' ? `Ubicación: ${direccion}\n` : '') +
-      `Pedido:\n${pedido.map(p => {
+      `Pedido:\n ------------------- \n ${pedido.map(p => {
         const lineaPrincipal = ` ${p.tamanio || p.price == 0 ? "" : p.cant + 'x'} ${p.name} ${p.tamanio || p.price == 0 ? "" : '$' + p.priceVariable}`;
         const variantes = p.variantes?.length > 0
           ? `${p.variantes[0].nombre}:\n` + Object.entries(p.variantesOpcionesSelecionadas).map(([nombre, valor]) =>
             `  ${valor.cantOpciones}x ${nombre} ${valor.valor == 0 ? "" : '$' + valor.valor} `
           ).join('\n')
           : '';
-        return `${lineaPrincipal}${variantes ? '\n' + variantes : ''}`;
+        return ` ${lineaPrincipal}${variantes ? '\n' + variantes : ''}`;
       }).join('\n-------------------\n')}\n\n` +
       `Total: 🧾$${pedido.reduce((sum, item) => sum + (item.totalComida ? Number(item.totalComida) : Number(item.priceVariable)), 0)}`;
 
