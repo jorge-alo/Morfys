@@ -10,7 +10,6 @@ export const ConfirmarEnvio = () => {
   const [resto, setResto] = useState("");
   const { enviarPedido } = useWhatsApp();
   const { metodoEntrega, metodoPago, direccion } = valueInputEnvio;
-  const [envio, setEnvio] = useState(false);
 
   // Nuevo estado para controlar la visibilidad del paso de PAGO
   const [mostrarMetodoPago, setMostrarMetodoPago] = useState(false);
@@ -71,157 +70,113 @@ export const ConfirmarEnvio = () => {
     setMostrarBotonesAccion(true);
   }
 
-  /* return (
-     <div className="container-modal">
-       <div className="container-modal__recibirpedido">
-         <label htmlFor=""> ¿Como deseas recibir el pedido?</label>
-         <select name="metodoEntrega" id="envio" onChange={handleChange} value={valueInputEnvio.metodoEntrega} >
-           <option value="envienmelo">Envienmelo</option>
-           <option value="local">Voy al local</option>
-         </select>
-       </div>
-       <div className="container-modal__metododpago">
-         <label htmlFor=""> ¿Como deseas pagar?</label>
-         <select name="metodoPago" id="pago" onChange={handleChange} value={valueInputEnvio.metodoPago}>
-           <option value="efectivo">Efectivo</option>
-           <option value="transferencia">Transferencia</option>
-         </select>
-       </div>
-       {valueInputEnvio.metodoEntrega == "envienmelo"
-         ?
-         <>
-           <div className="mensaje-de-envio">
-             <p className="envioubicacion">Por favor, envíe su ubicación actual desde WhatsApp para mayor precisión en la entrega</p>
-             <p className="mensaje-de-envio__no-incluido">*Precio de envio no incluido en el total*</p>
-           </div>
-           <div className="textarea-direccion">
-             <label htmlFor="">Direccion:</label>
-             <textarea
-               name="direccion"
-               id="direccion"
-               value={valueInputEnvio.direccion}
-               onChange={handleChange}
-               placeholder="Ingresa tu direccion"
-             >
-             </textarea>
-           </div>
- 
-         </>
-         :
-         ""
- 
- 
-       }
- 
-       <button onClick={handleConfirmarEnviar} className="confirmaryenvio">Confirmar y enviar pedido</button>
-       <button className="cancelarenvio" onClick={handleCancelarEnviar}>Cancelar</button>
-     </div>
-   )*/
-
   return (
     <div className="container-modal">
-      {/* 1. SELECCIÓN DE MÉTODO DE ENTREGA */}
-      <div className="container-modal__recibirpedido">
-        <label> ¿Como deseas recibir el pedido?</label>
-        <div>
-          {/* Opción 1: Envienmelo */}
-          <div className="radio-option">
-            <label htmlFor="envienmelo">Envienmelo</label>
-            <input
-              type="radio"
-              id="envienmelo"
-              name="metodoEntrega"
-              value="Envienmelo"
-              checked={valueInputEnvio.metodoEntrega === "Envienmelo"}
-              onChange={handleMetodoEntregaChange}
-            />
-          </div>
-          {/* Opción 2: Voy al local */}
-          <div className="radio-option">
-            <label htmlFor="local">Voy al local (Retiro)</label>
-            <input
-              type="radio"
-              id="local"
-              name="metodoEntrega"
-              value="Local"
-              checked={valueInputEnvio.metodoEntrega === "Local"}
-              onChange={handleMetodoEntregaChange}
-            />
-          </div>
-        </div>
-
-      </div>
-
-      {/* 2. SELECCIÓN DE MÉTODO DE PAGO (Aparece solo después de la Entrega) */}
-      {valueInputEnvio.metodoEntrega && mostrarMetodoPago && (
-        <div className="container-modal__metododpago">
-          <label> ¿Como deseas pagar?</label>
+    
+        {/* 1. SELECCIÓN DE MÉTODO DE ENTREGA */}
+        <div className="container-modal__recibirpedido">
+          <label> ¿Como deseas recibir el pedido?</label>
           <div>
-            {/* Opción 1: Efectivo */}
+            {/* Opción 1: Envienmelo */}
             <div className="radio-option">
-              <label htmlFor="efectivo">Efectivo</label>
+              <label htmlFor="envienmelo">Envienmelo</label>
               <input
                 type="radio"
-                id="efectivo"
-                name="metodoPago"
-                value="Efectivo"
-                checked={valueInputEnvio.metodoPago === "Efectivo"}
-                onChange={handleMetodoPagoChange}
+                id="envienmelo"
+                name="metodoEntrega"
+                value="Envienmelo"
+                checked={valueInputEnvio.metodoEntrega === "Envienmelo"}
+                onChange={handleMetodoEntregaChange}
               />
             </div>
-            {/* Opción 2: Transferencia */}
+            {/* Opción 2: Voy al local */}
             <div className="radio-option">
-              <label htmlFor="transferencia">Transferencia</label>
+              <label htmlFor="local">Voy al local (Retiro)</label>
               <input
                 type="radio"
-                id="transferencia"
-                name="metodoPago"
-                value="Transferencia"
-                checked={valueInputEnvio.metodoPago === "Transferencia"}
-                onChange={handleMetodoPagoChange}
+                id="local"
+                name="metodoEntrega"
+                value="Local"
+                checked={valueInputEnvio.metodoEntrega === "Local"}
+                onChange={handleMetodoEntregaChange}
               />
             </div>
           </div>
 
         </div>
-      )}
 
-      {/* 3. MENSAJE DE ENVÍO Y DIRECCIÓN (Aparecen solo si el método de Entrega es "envienmelo") */}
-      {valueInputEnvio.metodoEntrega === "Envienmelo" && mostrarBotonesAccion && (
-        <>
+        {/* 2. SELECCIÓN DE MÉTODO DE PAGO (Aparece solo después de la Entrega) */}
+        {valueInputEnvio.metodoEntrega && mostrarMetodoPago && (
+          <div className="container-modal__metododpago">
+            <label> ¿Como deseas pagar?</label>
+            <div>
+              {/* Opción 1: Efectivo */}
+              <div className="radio-option">
+                <label htmlFor="efectivo">Efectivo</label>
+                <input
+                  type="radio"
+                  id="efectivo"
+                  name="metodoPago"
+                  value="Efectivo"
+                  checked={valueInputEnvio.metodoPago === "Efectivo"}
+                  onChange={handleMetodoPagoChange}
+                />
+              </div>
+              {/* Opción 2: Transferencia */}
+              <div className="radio-option">
+                <label htmlFor="transferencia">Transferencia</label>
+                <input
+                  type="radio"
+                  id="transferencia"
+                  name="metodoPago"
+                  value="Transferencia"
+                  checked={valueInputEnvio.metodoPago === "Transferencia"}
+                  onChange={handleMetodoPagoChange}
+                />
+              </div>
+            </div>
 
-          <div className="textarea-direccion">
-            <textarea
-              name="direccion"
-              id="direccion"
-              value={valueInputEnvio.direccion}
-              onChange={handleChange}
-              placeholder="Direccion de entrega"
-            >
-            </textarea>
           </div>
+        )}
 
-          <div className="mensaje-de-envio">
-            <p className="envioubicacion">Por favor, envíe su **ubicación actual** desde WhatsApp para mayor precisión en la entrega</p>
-            <p className="mensaje-de-envio__no-incluido">*Precio de envio no incluido en el total*</p>
-          </div>
+        {/* 3. MENSAJE DE ENVÍO Y DIRECCIÓN (Aparecen solo si el método de Entrega es "envienmelo") */}
+        {valueInputEnvio.metodoEntrega === "Envienmelo" && mostrarBotonesAccion && (
+          <>
 
-        </>
-      )}
+            <div className="textarea-direccion">
+              <textarea
+                name="direccion"
+                id="direccion"
+                value={valueInputEnvio.direccion}
+                onChange={handleChange}
+                placeholder="Direccion de entrega"
+              >
+              </textarea>
+            </div>
 
-      {/* 4. BOTONES DE ACCIÓN (Aparecen solo después de la selección del método de Pago) */}
-      {valueInputEnvio.metodoPago && mostrarBotonesAccion && (
-        <>
-          <button onClick={handleConfirmarEnviar} className="confirmaryenvio">Confirmar y enviar pedido</button>
+            <div className="mensaje-de-envio">
+              <p className="envioubicacion">Por favor, envíe su **ubicación actual** desde WhatsApp para mayor precisión en la entrega</p>
+              <p className="mensaje-de-envio__no-incluido">*Precio de envio no incluido en el total*</p>
+            </div>
+
+          </>
+        )}
+
+        {/* 4. BOTONES DE ACCIÓN (Aparecen solo después de la selección del método de Pago) */}
+        {valueInputEnvio.metodoPago && mostrarBotonesAccion && (
+          <>
+            <button onClick={handleConfirmarEnviar} className="confirmaryenvio">Confirmar y enviar pedido</button>
+            <button className="cancelarenvio" onClick={handleCancelarEnviar}>Cancelar</button>
+          </>
+        )}
+
+        {/* Botón de Cancelar para cerrar el modal en cualquier momento */}
+        {/* Aunque el botón principal de Cancelar se muestra en el paso final, puedes dejar uno visible siempre */}
+        {(!valueInputEnvio.metodoPago || !mostrarBotonesAccion) && (
           <button className="cancelarenvio" onClick={handleCancelarEnviar}>Cancelar</button>
-        </>
-      )}
+        )}
+      
 
-      {/* Botón de Cancelar para cerrar el modal en cualquier momento */}
-      {/* Aunque el botón principal de Cancelar se muestra en el paso final, puedes dejar uno visible siempre */}
-      {(!valueInputEnvio.metodoPago || !mostrarBotonesAccion) && (
-        <button className="cancelarenvio" onClick={handleCancelarEnviar}>Cancelar</button>
-      )}
     </div>
   )
 }

@@ -10,6 +10,7 @@
     background-color: #6665;
     padding: 10px;
     z-index: 100000;
+    overflow-y: auto;
 }
 
 .container-modal {
