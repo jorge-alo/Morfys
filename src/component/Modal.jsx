@@ -7,7 +7,9 @@ import { DataContext } from '../context/DataContext';
 import { ConfirmarEnvio } from './ConfirmarEnvio';
 
 export const Modal = () => {
-    const { comidaData,
+    const { 
+        handleReset,
+        comidaData,
         setContVariable,
         setModalIsTrue,
         selectedModalEnviar,
@@ -29,6 +31,7 @@ export const Modal = () => {
             setSelectedModalEnviar(false);
             setVariantesOpcionesSelecionadas({});
             setContVariable(0);
+            handleReset();
         };
 
         // Escuchamos el evento "popstate"
@@ -47,6 +50,7 @@ export const Modal = () => {
             setSelectedModalEnviar(false);
             setVariantesOpcionesSelecionadas({});
             setContVariable(0);
+            handleReset();
             // 👇 Cuando se cierra manualmente, también volvemos atrás una vez
             window.history.back();
         }
