@@ -13,8 +13,8 @@ export const DataProvider = ({ children }) => {
 
 
   const [valueInputEnvio, setValueInputEnvio] = useState({
-    metodoEntrega: "envienmelo",
-    metodoPago: "efectivo",
+    metodoEntrega: "",
+    metodoPago: "",
     direccion: ""
   })
 
@@ -24,6 +24,15 @@ export const DataProvider = ({ children }) => {
       ...prev,
       [name]: value
     }))
+  }
+
+  const handleReset = () => {
+    setValueInputEnvio({
+      metodoEntrega: "",
+      metodoPago: "",
+      direccion: ""
+    }
+    )
   }
 
   const getDataComida = (name) => {
@@ -42,7 +51,7 @@ export const DataProvider = ({ children }) => {
     return result
   }
   return (
-    <DataContext.Provider value={{logo, setLogo, contVariable, setContVariable, valueInputEnvio, variantesOpcionesSelecionadas, setVariantesOpcionesSelecionadas, handleChange, getDataComida, getDataResto, selectedModalEnviar, setSelectedModalEnviar, comidaData, setComidaData, modalIsTrue, setModalIsTrue, pedido, setPedido }}>
+    <DataContext.Provider value={{handleReset, logo, setLogo, contVariable, setContVariable, valueInputEnvio, variantesOpcionesSelecionadas, setVariantesOpcionesSelecionadas, handleChange, getDataComida, getDataResto, selectedModalEnviar, setSelectedModalEnviar, comidaData, setComidaData, modalIsTrue, setModalIsTrue, pedido, setPedido }}>
       {children}
     </DataContext.Provider>
   )

@@ -13,7 +13,7 @@ export const useWhatsApp = () => {
       minute: '2-digit'
     })
 
-    const iconoEntrega = metodoEntrega === "local" ? "🏪" : "🛵💨";
+    const iconoEntrega = metodoEntrega === "Local" ? "🏪" : "🛵💨";
 
     const iconosPago = {
       "Efectivo": "💵",
@@ -24,9 +24,9 @@ export const useWhatsApp = () => {
 
     const mensaje = `¡NUEVO PEDIDO!\n\n` +
       `Fecha: ${fecha}\n` +
-      `Forma de entrega:  ${iconoEntrega} ${metodoEntrega === 'local' ? 'Retira en el local' : 'Envió a domicilio'}\n` +
+      `Forma de entrega:  ${iconoEntrega} ${metodoEntrega === 'Local' ? 'Retira en el local' : 'Envió a domicilio'}\n` +
       `Método de pago: ${iconoPago} ${metodoPago}\n` +
-      (metodoEntrega === 'envienmelo' ? `Ubicación: ${direccion}\n` : '') +
+      (metodoEntrega === 'Envienmelo' ? `Ubicación: ${direccion}\n` : '') +
       `Pedido:\n ------------------- \n ${pedido.map(p => {
         const lineaPrincipal = ` ${p.tamanio || p.price == 0 ? "" : p.cant + 'x'} ${p.name} ${p.tamanio || p.price == 0 ? "" : '$' + p.priceVariable}`;
         const variantes = p.variantes?.length > 0

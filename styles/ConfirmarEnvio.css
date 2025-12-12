@@ -19,13 +19,20 @@
     border: 2px solid #ccc;
     padding: 5px;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
     gap: 10px;
     font-size: 1.5rem;
     box-shadow: 0 0 10px #999;
 }
-
+.container-modal__recibirpedido label, .container-modal__metododpago label {
+    font-weight: bold;
+}
+.container-modal__recibirpedido div {
+    width: 100%;
+    padding: 5px 10px;
+}
 .container-modal__recibirpedido select {
     border: none;
     outline: none;
@@ -35,10 +42,16 @@
     border-radius: 4px;
 }
 
+.radio-option {
+    display: flex;
+    justify-content: space-between;
+}
+
 .container-modal__metododpago {
     border: 1px solid #ccc;
     padding: 5px;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
     font-size: 1.5rem;
@@ -46,7 +59,10 @@
     border: 2px solid #ccc;
     box-shadow: 0 0 10px #999;
 }
-
+.container-modal__metododpago div {
+    width: 100%;
+    padding: 5px 10px;
+}
 .container-modal__metododpago select {
     border: none;
     outline: none;
@@ -79,17 +95,13 @@
 .textarea-direccion {
     border: 1px solid #ccc;
     display: flex;
-    gap: 10px;
-    font-size: 1.5rem;
     box-shadow: 0 0 10px #999;
-    padding: 5px;
 }
 
+
 .textarea-direccion textarea {
-    flex-grow: 1;
     border: none;
-    padding: 0;
     resize: none;
     outline: none;
-    margin-top: 10px;
+    font-size: 1.2rem;
 }
