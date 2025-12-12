@@ -10,67 +10,89 @@ import { Modal } from "./Modal";
 import { ModalExpired } from "./ModalExpired";
 
 export const Local = () => {
-    const { getDataComida, modalIsTrue, logo, setLogo } = useContext(DataContext);
-    const { name } = useParams();
-    const [comidas, setComidas] = useState([]);
-    const [baner, setBaner] = useState(null);
-    const [expired, setExpired] = useState(null);
-    const [categoriaAbierta, setCategoriaAbierta] = useState(null);
-    
+  const { getDataComida, modalIsTrue, logo, setLogo } = useContext(DataContext);
+  const { name } = useParams();
+  const [comidas, setComidas] = useState([]);
+  const [baner, setBaner] = useState(null);
+  const [expired, setExpired] = useState(null);
+  const [categoriaAbierta, setCategoriaAbierta] = useState(null);
+  // 1. Estado para almacenar los datos completos del restaurante, incluyendo el nombre
+  const [restoData, setRestoData] = useState(null);
 
-    const loadLocal = async () => {
-        try {
-            const result = await getDataComida(name);
-           
-            setComidas(result.data.comidas);
-            setLogo(result.data.logo);
-            setBaner(result.data.resto.banner);
-            console.log("Valor de result en loadLocal", result);
-        } catch (error) {
-            console.log("Error al cargar los datos", error);
-            if(error.response.data.status === "expired"){
-                setExpired(error.response.data.status);
-                return;
-           }
-        }
 
+  const loadLocal = async () => {
+    try {
+      const result = await getDataComida(name);
+
+      setComidas(result.data.comidas);
+      setLogo(result.data.logo);
+      setBaner(result.data.resto.banner);
+      // 2. Guardamos los datos completos del restaurante para el nombre
+      setRestoData(result.data.resto);
+      console.log("Valor de result en loadLocal", result);
+    } catch (error) {
+      console.log("Error al cargar los datos", error);
+      if (error.response.data.status === "expired") {
+        setExpired(error.response.data.status);
+        return;
+      }
     }
-    useEffect(() => {
-        loadLocal()
-    }, [name])
 
-
-    useEffect(() => {
-  if (modalIsTrue) {
-    document.body.style.overflow = "hidden"; // bloquea scroll de fondo
-  } else {
-    document.body.style.overflow = "";
   }
+  useEffect(() => {
+    loadLocal()
+  }, [name])
 
-  return () => {
-    document.body.style.overflow = "";
-  };
-}, [modalIsTrue]);
+  // 3. NUEVO useEffect para manejar el título dinámico
+  useEffect(() => {
+    // Verificamos si los datos del restaurante han cargado y tienen un nombre
+    if (restoData && restoData.local) {
+      // Usamos 'restoData.nombre' (cambia 'nombre' si tu propiedad es 'name')
+      document.title = `Morfis: ${restoData.local}`;
+    } else {
+      // Título por defecto mientras está cargando
+      document.title = 'Morfis: Cargando Menú...';
+    }
 
-const handleclickCardISTrue = (cat) => {
+    // 4. Limpieza (opcional pero recomendado):
+    // Cuando el componente se desmonta (ej: navegamos a otra página),
+    // restauramos el título o lo dejamos en el genérico.
+    return () => {
+      document.title = 'Morfis';
+    };
+  }, [restoData]); // Dependencia: Se ejecuta cuando 'restoData' cambia
+
+  useEffect(() => {
+    if (modalIsTrue) {
+      document.body.style.overflow = "hidden"; // bloquea scroll de fondo
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [modalIsTrue]);
+
+  const handleclickCardISTrue = (cat) => {
     setCategoriaAbierta(prev => prev == cat ? null : cat);
   }
 
-    return (
-        <div className="container-local">
-            { expired && <ModalExpired/>}
-            <Banner baner={baner} name={name} logo={logo}/>
-            <div className="container-local-section">
-                <Categorias comidas={comidas} handleclickCardISTrue= {handleclickCardISTrue} />
-                <CardSection categoriaAbierta={categoriaAbierta} comidas={comidas} handleclickCardISTrue= {handleclickCardISTrue} />
-                <Mipedido />
-            </div>
-            {
-                modalIsTrue
-                    ?
-                    <Modal />
-                    : ""
-            }
-        </div>
-    )
+  return (
+    <div className="container-local">
+      {expired && <ModalExpired />}
+      <Banner baner={baner} name={name} logo={logo} />
+      <div className="container-local-section">
+        <Categorias comidas={comidas} handleclickCardISTrue={handleclickCardISTrue} />
+        <CardSection categoriaAbierta={categoriaAbierta} comidas={comidas} handleclickCardISTrue={handleclickCardISTrue} />
+        <Mipedido />
+      </div>
+      {
+        modalIsTrue
+          ?
+          <Modal />
+          : ""
+      }
+    </div>
+  )
 }
