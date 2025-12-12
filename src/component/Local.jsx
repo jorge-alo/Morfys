@@ -8,6 +8,8 @@ import { Mipedido } from "./Mipedido";
 import '../../styles/Local.css'
 import { Modal } from "./Modal";
 import { ModalExpired } from "./ModalExpired";
+const MORFIS_DEFAULT_LOGO = "/morfis-logo.png";
+
 
 export const Local = () => {
   const { getDataComida, modalIsTrue, logo, setLogo } = useContext(DataContext);
@@ -61,6 +63,21 @@ export const Local = () => {
       document.title = 'Morfis';
     };
   }, [restoData]); // Dependencia: Se ejecuta cuando 'restoData' cambia
+
+  useEffect(() => {
+        // ... (código para encontrar o crear el link)
+
+        if (logo) {
+            link.href = logo; // Logo del local
+        } else {
+            link.href = MORFIS_DEFAULT_LOGO; // Logo de Morfis
+        }
+
+        return () => {
+            link.href = MORFIS_DEFAULT_LOGO; // Restaurar al logo de Morfis al salir
+        };
+
+    }, [logo]);
 
   useEffect(() => {
     if (modalIsTrue) {
