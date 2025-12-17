@@ -19,7 +19,7 @@ export const ConfirmarEnvio = () => {
   const handleGetDataResto = async () => {
     try {
       const result = await getDataResto(name)
-      
+      setResto(result.data.resto);
     } catch (error) {
       console.log("Error al obtener getDataResto", error);
     }
