@@ -12,20 +12,18 @@ const MORFIS_DEFAULT_LOGO = "/morfis-logo.png";
 
 
 export const Local = () => {
-  const { getDataComida, modalIsTrue, logo, setLogo } = useContext(DataContext);
+  const { getDataComida, modalIsTrue, logo, setLogo, restoData, setRestoData } = useContext(DataContext);
   const { name } = useParams();
   const [comidas, setComidas] = useState([]);
   const [baner, setBaner] = useState(null);
   const [expired, setExpired] = useState(null);
   const [categoriaAbierta, setCategoriaAbierta] = useState(null);
-  // 1. Estado para almacenar los datos completos del restaurante, incluyendo el nombre
-  const [restoData, setRestoData] = useState(null);
+ 
 
 
   const loadLocal = async () => {
     try {
       const result = await getDataComida(name);
-
       setComidas(result.data.comidas);
       setLogo(result.data.logo);
       setBaner(result.data.resto.banner);

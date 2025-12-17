@@ -10,3 +10,8 @@ export const apiGetDataComida = async (name) => {
 export const apiGetDataResto = async (name) => {
  return await api.get(`/resto/${name}`)
 }
+
+export const apiPostSendPedido = async (pedido) => {
+ return await api.post(`/pedido/`, pedido);
+}
+

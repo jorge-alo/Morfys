@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { apiGetDataComida, apiGetDataResto } from '../api/Api.Request';
+import { apiGetDataComida, apiGetDataResto, apiPostSendPedido } from '../api/Api.Request';
 import { DataContext } from './DataContext'
 
 export const DataProvider = ({ children }) => {
@@ -10,6 +10,8 @@ export const DataProvider = ({ children }) => {
   const [contVariable, setContVariable] = useState(0);
   const [logo, setLogo] = useState(null);
   const [variantesOpcionesSelecionadas, setVariantesOpcionesSelecionadas] = useState({});
+   // 1. Estado para almacenar los datos completos del restaurante, incluyendo el nombre
+  const [restoData, setRestoData] = useState(null);
 
 
   const [valueInputEnvio, setValueInputEnvio] = useState({
@@ -50,8 +52,13 @@ export const DataProvider = ({ children }) => {
     console.log("Valor de resutl en getDataResto", result);
     return result
   }
+
+   const postSendPedido = async (pedido) => {
+    const result = await apiPostSendPedido(pedido);
+    return result
+  }
   return (
-    <DataContext.Provider value={{handleReset, logo, setLogo, contVariable, setContVariable, valueInputEnvio, variantesOpcionesSelecionadas, setVariantesOpcionesSelecionadas, handleChange, getDataComida, getDataResto, selectedModalEnviar, setSelectedModalEnviar, comidaData, setComidaData, modalIsTrue, setModalIsTrue, pedido, setPedido }}>
+    <DataContext.Provider value={{restoData, setRestoData, postSendPedido, handleReset, logo, setLogo, contVariable, setContVariable, valueInputEnvio, variantesOpcionesSelecionadas, setVariantesOpcionesSelecionadas, handleChange, getDataComida, getDataResto, selectedModalEnviar, setSelectedModalEnviar, comidaData, setComidaData, modalIsTrue, setModalIsTrue, pedido, setPedido }}>
       {children}
     </DataContext.Provider>
   )

@@ -23,11 +23,12 @@ export const VarianteSelection = ({ setSelectedVariante }) => {
         setContVariable(prevCont => prevCont + 1);
 
         setVariantesOpcionesSelecionadas(prev => {
-            const prevOpciones = prev[opcion.nombre] || { cantOpciones: 0, valor: 0 }
+            const prevOpciones = prev[opcion.nombre] || { cantOpciones: 0, valor: 0, id: opcion.id }
             const nuevoValor = prevOpciones.cantOpciones + 1;
             return {
                 ...prev,
                 [opcion.nombre]: {
+                    id: opcion.id,
                     cantOpciones: nuevoValor,
                     valor: Number(opcion.precio_adicional) * nuevoValor
                 }
@@ -48,6 +49,7 @@ export const VarianteSelection = ({ setSelectedVariante }) => {
                 return {
                     ...prev,
                     [opcion.nombre]: {
+                        id: opcion.id,
                         cantOpciones: nuevoValor,
                         valor: Number(opcion.precio_adicional) * nuevoValor
                     }
