@@ -57,17 +57,19 @@ export const ConfirmarEnvio = () => {
         cantidad: item.cant || 1,
         // Precio unitario calculado (Total del item dividido su cantidad)
         precio_unitario: item.price
-          ? Number(item.price) 
+          ? Number(item.price)
           : 0,
 
         // --- AQUÍ ENTRAN LAS OPCIONES CON SUS IDS ---
         opciones: item.variantesOpcionesSelecionadas
-          ? Object.values(item.variantesOpcionesSelecionadas).map(op => ({
-            opcion_id: op.id,         // El ID que agregamos en VarianteSelection
-            nombre_opcion: op.nombre, // Opcional, ayuda a debuguear
-            cantidad: op.cantOpciones || 1,
-            precio_unitario: op.cantOpciones > 0 ? (Number(op.valor) / op.cantOpciones) : 0
-          }))
+          ? Object.values(item.variantesOpcionesSelecionadas)
+            .filter(op => op.id) // <--- FILTRO: Solo enviar si tiene ID
+            .map(op => ({
+              opcion_id: op.id, // Verifica que la propiedad se llame 'id' en el estado
+              nombre_opcion: op.nombre,
+              cantidad: op.cantOpciones || 1,
+              precio_unitario: op.cantOpciones > 0 ? (Number(op.valor) / op.cantOpciones) : 0
+            }))
           : []
       }))
     };
