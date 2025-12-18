@@ -70,12 +70,13 @@ export const CardSelection = ({ setSelectedVariante }) => {
 
     const handleTamañoSumar = (opcion) => {
         setVariantesOpcionesSelecionadas(prev => {
-            const prevOpciones = prev[opcion.nombre] || { cantOpciones: 0, valor: 0 }
+            const prevOpciones = prev[opcion.nombre] || { cantOpciones: 0, valor: 0, id: opcion.id  }
             const nuevoValor = prevOpciones.cantOpciones + 1;
 
             const actualizado = {
                 ...prev,
                 [opcion.nombre]: {
+                    id: opcion.id,
                     cantOpciones: nuevoValor,
                     valor: Number(opcion.precio_adicional) * nuevoValor
                 }
@@ -111,6 +112,7 @@ export const CardSelection = ({ setSelectedVariante }) => {
                 const actualizado = {
                     ...prev,
                     [opcion.nombre]: {
+                        id: opcion.id,
                         cantOpciones: nuevoValor,
                         valor: Number(opcion.precio_adicional) * nuevoValor
                     }
