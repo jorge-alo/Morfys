@@ -54,6 +54,7 @@ export const ConfirmarEnvio = () => {
       // Mapeo detallado de productos
       productos: pedido.map(item => ({
         comida_id: item.id,
+        comida_name: item.name,
         cantidad: item.cant || 1,
         // Precio unitario calculado (Total del item dividido su cantidad)
         precio_unitario: item.price
@@ -62,11 +63,11 @@ export const ConfirmarEnvio = () => {
 
         // --- AQUÍ ENTRAN LAS OPCIONES CON SUS IDS ---
         opciones: item.variantesOpcionesSelecionadas
-          ? Object.values(item.variantesOpcionesSelecionadas)
-            .filter(op => op.id) // <--- FILTRO: Solo enviar si tiene ID
-            .map(op => ({
+          ? Object.entries(item.variantesOpcionesSelecionadas)
+            .filter(([nombre, op]) => op.id) // <--- FILTRO: Solo enviar si tiene ID
+            .map(([nombre, op]) => ({
               opcion_id: op.id, // Verifica que la propiedad se llame 'id' en el estado
-              nombre_opcion: op.nombre,
+              name_opcion: nombre,
               cantidad: op.cantOpciones || 1,
               precio_unitario: op.cantOpciones > 0 ? (Number(op.valor) / op.cantOpciones) : 0
             }))
