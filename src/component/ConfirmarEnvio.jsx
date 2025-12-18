@@ -67,7 +67,7 @@ export const ConfirmarEnvio = () => {
             .filter(([nombre, op]) => op.id) // <--- FILTRO: Solo enviar si tiene ID
             .map(([nombre, op]) => ({
               opcion_id: op.id, // Verifica que la propiedad se llame 'id' en el estado
-              name_opcion: nombre,
+              nombre_opcion: nombre,
               cantidad: op.cantOpciones || 1,
               precio_unitario: op.cantOpciones > 0 ? (Number(op.valor) / op.cantOpciones) : 0
             }))
