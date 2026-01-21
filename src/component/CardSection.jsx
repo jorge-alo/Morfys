@@ -28,22 +28,34 @@ export const CardSection = ({ comidas,  handleclickCardISTrue, categoriaAbierta 
     }, {})
   }, [comidas])
 
-  const categoriasOrdenadas = useMemo(() => {
-    const categoriasEntries = comidasPorCategorias ? Object.entries(comidasPorCategorias) : null;
-    const resultado = [];
-    if (comidasPorCategorias && comidasPorCategorias["menu"]) {
-      resultado.push(["menu", comidasPorCategorias["menu"]]);
-    }
-    if (categoriasEntries) {
-      for (const [cat, comidasArray] of categoriasEntries) {
-        if (cat != "menu") {
-          resultado.push([cat, comidasArray]);
-        }
-      }
+ const categoriasOrdenadas = useMemo(() => {
+  if (!comidasPorCategorias) return [];
+
+  return Object.entries(comidasPorCategorias).sort(([a], [b]) => {
+    const catA = a.toLowerCase();
+    const catB = b.toLowerCase();
+
+    // Asignamos el orden de jerarquía
+    const obtenerJerarquia = (nombre) => {
+      if (nombre === "menu") return 1;
+      if (nombre.startsWith("prom")) return 2;  // Cubre "promo", "promocion", etc.
+      if (nombre.startsWith("plato")) return 3; // Cubre "plato", "platos", "platofuerte"
+      return 4; // Todo lo demás va después
+    };
+
+    const ordenA = obtenerJerarquia(catA);
+    const ordenB = obtenerJerarquia(catB);
+
+    // Si pertenecen a grupos diferentes, mandamos el de menor número arriba
+    if (ordenA !== ordenB) {
+      return ordenA - ordenB;
     }
 
-    return resultado;
-  }, [comidasPorCategorias])
+    // Si están en el mismo grupo (ej. dos que empiezan con "prom"), 
+    // se ordenan alfabéticamente entre sí
+    return catA.localeCompare(catB);
+  });
+}, [comidasPorCategorias]);
 
   
 
