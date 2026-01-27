@@ -18,7 +18,7 @@ export const Local = () => {
   const [baner, setBaner] = useState(null);
   const [expired, setExpired] = useState(null);
   const [categoriaAbierta, setCategoriaAbierta] = useState(null);
- 
+
 
 
   const loadLocal = async () => {
@@ -100,7 +100,7 @@ export const Local = () => {
   const handleclickCardISTrue = (cat) => {
     setCategoriaAbierta(prev => prev == cat ? null : cat);
   }
-
+  if (!restoData) return <p>Cargando menú...</p>;
   return (
     <div className="container-local">
       {expired && <ModalExpired />}

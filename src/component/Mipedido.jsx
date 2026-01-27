@@ -1,29 +1,18 @@
 import { useContext, useEffect, useState } from 'react'
 import '../../styles/Mipedido.css'
 import { DataContext } from '../context/DataContext'
-import { Await, useParams } from 'react-router-dom';
 import { estaAbierto } from '../hook/horarios.js';
 
 export const Mipedido = () => {
-  const { pedido, setPedido, setSelectedModalEnviar, setModalIsTrue, getDataResto } = useContext(DataContext);
+  const { pedido, setPedido, setSelectedModalEnviar, setModalIsTrue, restoData } = useContext(DataContext);
   const [isModalMipeddido, setIsModalMipeddido] = useState(false);
   const [subtotal, setSubtotal] = useState("");
-  const [resto, setResto] = useState("");
-  const { name } = useParams();
+ 
 
-  const handleGetDataResto = async () => {
-    try {
-      const result = await getDataResto(name)
-      setResto(result.data.resto);
-      console.log("Valor de result en confirmarEnvio", result);
-    } catch (error) {
-      console.log("Error al obtener getDataResto", error);
-    }
-  }
 
   console.log("Valor de pedido en Mipedido", pedido);
   useEffect(() => {
-    handleGetDataResto();
+    ;
     setSubtotal(pedido.reduce((acc, item) => (
       acc + (item.totalComida ? item.totalComida : item.priceVariable)
     ), 0))
@@ -42,7 +31,7 @@ export const Mipedido = () => {
   }
 
   const handleEnviarPedido = () => {
-    if (!estaAbierto(resto)) {
+    if (!estaAbierto(restoData)) {
       alert("🚫 El local está cerrado en este horario. Intenta en el horario de atención.");
       return
     }
@@ -140,11 +129,11 @@ export const Mipedido = () => {
                 <h4> Subtotal </h4>
                 <h4> ${subtotal} </h4>
               </div>
-              <button className={Number(resto.envioMinimo) > subtotal ? "button-falta-dinero" : undefined} onClick={handleEnviarPedido} disabled={Number(resto.envioMinimo) > subtotal ? true : false}>
+              <button className={Number(restoData.envioMinimo) > subtotal ? "button-falta-dinero" : undefined} onClick={handleEnviarPedido} disabled={Number(restoData.envioMinimo) > subtotal ? true : false}>
                 {
-                  Number(resto.envioMinimo) > subtotal
+                  Number(restoData.envioMinimo) > subtotal
                     ?
-                    `Te faltan $${Number(resto.envioMinimo) - Number(subtotal)} para hacer el pedido`
+                    `Te faltan $${Number(restoData.envioMinimo) - Number(subtotal)} para hacer el pedido`
                     :
                     "Enviar"
                 }
