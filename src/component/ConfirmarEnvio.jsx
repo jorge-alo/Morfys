@@ -1,13 +1,10 @@
 import { useContext, useEffect, useState } from "react"
 import { DataContext } from "../context/DataContext"
-import { useParams } from "react-router-dom";
 import { useWhatsApp } from "../hook/useWhatsApp";
 import '../../styles/ConfirmarEnvio.css'
 
 export const ConfirmarEnvio = () => {
-  const { restoData, postSendPedido, handleReset, valueInputEnvio, handleChange, getDataResto, setModalIsTrue, setPedido, pedido, setSelectedModalEnviar } = useContext(DataContext);
-  const { name } = useParams();
-  const [resto, setResto] = useState("");
+  const { restoData, postSendPedido, handleReset, valueInputEnvio, handleChange,  setModalIsTrue, setPedido, pedido, setSelectedModalEnviar } = useContext(DataContext);
   const { enviarPedido } = useWhatsApp();
   const { metodoEntrega, metodoPago, direccion } = valueInputEnvio;
 
@@ -16,19 +13,6 @@ export const ConfirmarEnvio = () => {
   // Nuevo estado para controlar la visibilidad de los botones de ACCIÓN
   const [mostrarBotonesAccion, setMostrarBotonesAccion] = useState(false);
 
-  const handleGetDataResto = async () => {
-    try {
-      const result = await getDataResto(name)
-      setResto(result.data.resto);
-    } catch (error) {
-      console.log("Error al obtener getDataResto", error);
-    }
-  }
-
-  useEffect(() => {
-    console.log("Ejecutando el useEffect para corroborar");
-    handleGetDataResto()
-  }, [])
 
   const handleConfirmarEnviar = () => {
 
@@ -75,7 +59,7 @@ export const ConfirmarEnvio = () => {
       }))
     };
     postSendPedido(pedidoParaDB);
-    enviarPedido(resto.cel, metodoEntrega, metodoPago, direccion, pedido);
+    enviarPedido(restoData.cel, metodoEntrega, metodoPago, direccion, pedido);
     setModalIsTrue(false);
     setSelectedModalEnviar(false);
     setPedido([]);
