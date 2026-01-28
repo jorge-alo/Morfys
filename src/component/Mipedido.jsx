@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 import '../../styles/Mipedido.css'
 import { DataContext } from '../context/DataContext'
 import { estaAbierto } from '../hook/horarios.js';
@@ -6,12 +6,12 @@ import { estaAbierto } from '../hook/horarios.js';
 export const Mipedido = () => {
   const { pedido, setPedido, setSelectedModalEnviar, setModalIsTrue, restoData } = useContext(DataContext);
   const [isModalMipeddido, setIsModalMipeddido] = useState(false);
-  const [subtotal, setSubtotal] = useState("");
- 
+  //const [subtotal, setSubtotal] = useState("");
+
 
 
   console.log("Valor de pedido en Mipedido", pedido);
-  useEffect(() => {
+  /*useEffect(() => {
     ;
     setSubtotal(pedido.reduce((acc, item) => (
       acc + (item.totalComida ? item.totalComida : item.priceVariable)
@@ -19,7 +19,19 @@ export const Mipedido = () => {
     if (pedido.length == 0) {
       setIsModalMipeddido(false);
     }
-  }, [pedido])
+  }, [pedido])*/
+
+  // ✅ MEJORA: Subtotal calculado (sin renderizado extra)
+  const subtotal = useMemo(() => {
+    return pedido.reduce((acc, item) => (
+      acc + (item.totalComida ? Number(item.totalComida) : Number(item.priceVariable))
+    ), 0);
+  }, [pedido]);
+
+  // ✅ MEJORA: Sanitización de valores para evitar errores de comparación
+  const envioMinimo = Number(restoData?.envioMinimo) || 0;
+  const faltaParaMinimo = envioMinimo - subtotal;
+  const noAlcanzaMinimo = subtotal < envioMinimo;
 
   const handleEliminar = (id) => {
     setPedido(prev => (
@@ -83,10 +95,10 @@ export const Mipedido = () => {
                   <div className='container-mipedido-data__container-description'>
                     <div className='container-mipedido-data__description'>
                       <div className='mipedido-data-description__nombre'>
-                        {item.tamanio ? "" : item.price == 0 ? "" : <h7> {item.cant}X </h7>}
+                        {item.tamanio ? "" : item.price == 0 ? "" : <span> {item.cant}X </span>}
                         <h5> {item.name} </h5>
                       </div>
-                      {item.tamanio ? "" : item.price == 0 ? "" : <h7> (${item.price}) </h7>}
+                      {item.tamanio ? "" : item.price == 0 ? "" : <span> (${item.price}) </span>}
                     </div>
                     {
                       item.variantesOpcionesSelecionadas
@@ -94,10 +106,10 @@ export const Mipedido = () => {
                         Object.entries(item.variantesOpcionesSelecionadas).map(([nombre, data]) => (
                           <div key={nombre} className='container-mipedido__opciones'>
                             <div className='mipedido-opciones__nombre'>
-                              <h7> {data.cantOpciones}X </h7>
+                              <span> {data.cantOpciones}X </span>
                               <h6> {nombre} </h6>
                             </div>
-                            <h7> {data.valor == 0 ? "" : `($${data.valor})`} </h7>
+                            <span> {data.valor == 0 ? "" : `($${data.valor})`} </span>
                           </div>
                         ))
 
@@ -129,14 +141,14 @@ export const Mipedido = () => {
                 <h4> Subtotal </h4>
                 <h4> ${subtotal} </h4>
               </div>
-              <button className={Number(restoData.envioMinimo) > subtotal ? "button-falta-dinero" : undefined} onClick={handleEnviarPedido} disabled={Number(restoData.envioMinimo) > subtotal ? true : false}>
-                {
-                  Number(restoData.envioMinimo) > subtotal
-                    ?
-                    `Te faltan $${Number(restoData.envioMinimo) - Number(subtotal)} para hacer el pedido`
-                    :
-                    "Enviar"
-                }
+              <button
+                className={noAlcanzaMinimo ? "button-falta-dinero" : undefined}
+                onClick={handleEnviarPedido}
+                disabled={noAlcanzaMinimo}
+              >
+                {noAlcanzaMinimo 
+                ? `Te faltan $${faltaParaMinimo} para hacer el pedido` 
+                : "Enviar"}
               </button>
             </>
             : ""

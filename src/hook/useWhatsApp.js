@@ -1,10 +1,9 @@
 import { useCallback } from "react"
 
-
 export const useWhatsApp = () => {
-  const enviarPedido = useCallback((cel, metodoEntrega, metodoPago, direccion, pedido) => {
-    console.log("Valor de cel, metodoEntrega,metodoPago, direccion", cel, metodoEntrega, metodoPago, direccion);
-    console.log("Valor de pedidos en useWhatsApp", pedido);
+  // Agregamos ubicacionLink como último parámetro con un valor por defecto vacío
+  const enviarPedido = useCallback((cel, metodoEntrega, metodoPago, direccion, pedido, ubicacionLink = "") => {
+    
     const fecha = new Date().toLocaleString('es-PE', {
       day: '2-digit',
       month: '2-digit',
@@ -14,19 +13,23 @@ export const useWhatsApp = () => {
     })
 
     const iconoEntrega = metodoEntrega === "Local" ? "🏪" : "🛵💨";
-
     const iconosPago = {
       "Efectivo": "💵",
       "Transferencia": "💳",
     };
-
     const iconoPago = iconosPago[metodoPago] || "💰";
 
+    // --- CONSTRUCCIÓN DEL MENSAJE (Tu estructura original mantenida) ---
     const mensaje = `¡NUEVO PEDIDO!\n\n` +
       `Fecha: ${fecha}\n` +
       `Forma de entrega:  ${iconoEntrega} ${metodoEntrega === 'Local' ? 'Retira en el local' : 'Envió a domicilio'}\n` +
       `Método de pago: ${iconoPago} ${metodoPago}\n` +
-      (metodoEntrega === 'Envienmelo' ? `Ubicación: ${direccion}\n` : '') +
+      
+      // Aquí insertamos la lógica de ubicación mejorada
+      (metodoEntrega === 'Envienmelo' 
+        ? `Ubicación: ${direccion}\n${ubicacionLink ? `📍 Mapa: ${ubicacionLink}\n` : ''}` 
+        : '') +
+      
       `Pedido:\n ------------------- \n ${pedido.map(p => {
         const lineaPrincipal = ` ${p.tamanio || p.price == 0 ? "" : p.cant + 'x'} ${p.name} ${p.tamanio || p.price == 0 ? "" : '$' + p.priceVariable}`;
         const variantes = p.variantes?.length > 0
@@ -36,12 +39,13 @@ export const useWhatsApp = () => {
           : '';
         return ` ${lineaPrincipal}${variantes ? '\n' + variantes : ''}`;
       }).join('\n-------------------\n')}\n\n` +
+      
       `Total: 🧾$${pedido.reduce((sum, item) => sum + (item.totalComida ? Number(item.totalComida) : Number(item.priceVariable)), 0)}`;
 
-    // Codificación correcta del mensaje (conserva emojis)
     const mensajeCodificado = encodeURIComponent(mensaje)
     const url = `https://wa.me/${cel}?text=${mensajeCodificado}`;
     window.open(url, '_blank')
-  })
+  }, []) // Dependencias vacías para useCallback
+
   return { enviarPedido };
 }

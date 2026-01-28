@@ -4,7 +4,7 @@ import { useWhatsApp } from "../hook/useWhatsApp";
 import '../../styles/ConfirmarEnvio.css'
 
 export const ConfirmarEnvio = () => {
-  const { restoData, postSendPedido, handleReset, valueInputEnvio, handleChange,  setModalIsTrue, setPedido, pedido, setSelectedModalEnviar } = useContext(DataContext);
+  const { restoData, postSendPedido, handleReset, valueInputEnvio, handleChange, setModalIsTrue, setPedido, pedido, setSelectedModalEnviar } = useContext(DataContext);
   const { enviarPedido } = useWhatsApp();
   const { metodoEntrega, metodoPago, direccion } = valueInputEnvio;
 
@@ -58,14 +58,42 @@ export const ConfirmarEnvio = () => {
           : []
       }))
     };
-    postSendPedido(pedidoParaDB);
-    enviarPedido(restoData.cel, metodoEntrega, metodoPago, direccion, pedido);
+
+    // 2. Detectamos dispositivo
+    const esMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    // 3. Lógica de envío con condicional de ubicación
+    if (esMobile && metodoEntrega === "Envienmelo") {
+      // Intentamos obtener GPS solo si es móvil y es envío a domicilio
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const link = `https://www.google.com/maps?q=${pos.coords.latitude},${pos.coords.longitude}`;
+          finalizarProceso(pedidoParaDB, link);
+        },
+        (err) => {
+          // Si falla el GPS o el usuario lo niega
+          finalizarProceso(pedidoParaDB, "");
+        },
+        { enableHighAccuracy: true, timeout: 8000 }
+      );
+    } else {
+      // Es PC o retiro en local: enviamos directo
+      finalizarProceso(pedidoParaDB, "");
+    }
+    console.log("Valor de valueInput en confirmarEnvio", valueInputEnvio);
+  }
+
+  // Función auxiliar para no repetir código de limpieza
+  const finalizarProceso = (pedidoDB, linkGps) => {
+    postSendPedido(pedidoDB);
+    // Pasamos el nuevo parámetro linkGps al hook
+    enviarPedido(restoData.cel, metodoEntrega, metodoPago, direccion, pedido, linkGps);
+    
+    // Limpieza de estados
     setModalIsTrue(false);
     setSelectedModalEnviar(false);
     setPedido([]);
-    handleReset()
-    console.log("Valor de valueInput en confirmarEnvio", valueInputEnvio);
-  }
+    handleReset();
+  };
 
   const handleCancelarEnviar = () => {
     setModalIsTrue(false);
