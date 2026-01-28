@@ -48,7 +48,7 @@ export const Mipedido = () => {
       return
     }
     setModalIsTrue(true);
-    setSelectedModalEnviar(false);
+    setSelectedModalEnviar(true);
   }
   const handleClickModalMipedido = () => {
     setIsModalMipeddido(true);
