@@ -47,9 +47,13 @@ export const Mipedido = () => {
       alert("🚫 El local está cerrado en este horario. Intenta en el horario de atención.");
       return
     }
+    // ✅ Si el modal de "Mi Pedido" estaba abierto, cerramos su entrada de historial
+    if (isModalMipeddido) {
+      window.history.back();
+    }
     setModalIsTrue(true);
     setSelectedModalEnviar(true);
-     setIsModalMipeddido(false);
+    setIsModalMipeddido(false);
   }
   const handleClickModalMipedido = () => {
     setIsModalMipeddido(true);
@@ -147,9 +151,9 @@ export const Mipedido = () => {
                 onClick={handleEnviarPedido}
                 disabled={noAlcanzaMinimo}
               >
-                {noAlcanzaMinimo 
-                ? `Te faltan $${faltaParaMinimo} para hacer el pedido` 
-                : "Enviar"}
+                {noAlcanzaMinimo
+                  ? `Te faltan $${faltaParaMinimo} para hacer el pedido`
+                  : "Enviar"}
               </button>
             </>
             : ""

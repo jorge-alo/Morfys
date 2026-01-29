@@ -40,8 +40,13 @@ export const Modal = () => {
         // Cuando se desmonta el modal, eliminamos el listener
         return () => {
             window.removeEventListener("popstate", handlePopState);
+            // ✅ Si el componente se desmonta por CUALQUIER razón que no sea popstate
+            // y todavía hay un estado de modal en el historial, lo sacamos.
+            if (window.history.state?.modal) {
+                window.history.back();
+            }
         };
-    }, []); // Solo cuando se monta el modal
+    },[handleReset, setContVariable, setModalIsTrue, setSelectedModalEnviar, setVariantesOpcionesSelecionadas]); // Solo cuando se monta el modal
 
     const handleCloseModal = (e) => {
         if (e.target.classList.contains("section-modal")) {

@@ -87,12 +87,18 @@ export const ConfirmarEnvio = () => {
     postSendPedido(pedidoDB);
     // Pasamos el nuevo parámetro linkGps al hook
     enviarPedido(restoData.cel, metodoEntrega, metodoPago, direccion, pedido, linkGps);
-    
-    // Limpieza de estados
-    setModalIsTrue(false);
-    setSelectedModalEnviar(false);
-    setPedido([]);
-    handleReset();
+    // ✅ 1. Solo disparamos el retroceso del historial
+    if (window.history.state?.modal || window.history.state?.mipedido) {
+      window.history.back();
+    }
+
+    // ✅ 2. NO limpiamos los estados aquí manualmente, 
+    // dejamos que 'popstate' lo haga, pero esperamos un suspiro 
+    // antes de vaciar el pedido (que es lo más pesado).
+    setTimeout(() => {
+      setPedido([]); // Limpiamos el carrito al final de todo
+    }, 300);
+  
   };
 
   const handleCancelarEnviar = () => {
