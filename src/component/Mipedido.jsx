@@ -49,11 +49,20 @@ export const Mipedido = () => {
     }
     // ✅ Si el modal de "Mi Pedido" estaba abierto, cerramos su entrada de historial
     if (isModalMipeddido) {
+      // 1. Limpiamos el historial primero
       window.history.back();
+
+      // 2. Esperamos a que el historial se asiente antes de abrir el siguiente modal
+      setTimeout(() => {
+        setModalIsTrue(true);
+        setSelectedModalEnviar(true);
+        setIsModalMipeddido(false);
+      }, 150); // 150ms es suficiente para que el popstate termine su trabajo
+    } else {
+      // Si el carrito no estaba en modo modal, abrimos directo
+      setModalIsTrue(true);
+      setSelectedModalEnviar(true);
     }
-    setModalIsTrue(true);
-    setSelectedModalEnviar(true);
-    setIsModalMipeddido(false);
   }
   const handleClickModalMipedido = () => {
     setIsModalMipeddido(true);

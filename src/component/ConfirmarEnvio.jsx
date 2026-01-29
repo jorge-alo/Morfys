@@ -97,6 +97,7 @@ export const ConfirmarEnvio = () => {
     // antes de vaciar el pedido (que es lo más pesado).
     setTimeout(() => {
       setPedido([]); // Limpiamos el carrito al final de todo
+      handleReset();
     }, 300);
   
   };
