@@ -7,7 +7,7 @@ import { DataContext } from '../context/DataContext';
 import { ConfirmarEnvio } from './ConfirmarEnvio';
 
 export const Modal = () => {
-    const { 
+    const {
         handleReset,
         comidaData,
         setContVariable,
@@ -45,13 +45,8 @@ export const Modal = () => {
 
     const handleCloseModal = (e) => {
         if (e.target.classList.contains("section-modal")) {
-            setModalIsTrue(false);
-            setSelectedVariante(false);
-            setSelectedModalEnviar(false);
-            setVariantesOpcionesSelecionadas({});
-            setContVariable(0);
-            handleReset();
-            // 👇 Cuando se cierra manualmente, también volvemos atrás una vez
+            // Al ejecutar back(), el navegador dispara 'popstate' 
+            // y el useEffect se encarga de limpiar TODO.
             window.history.back();
         }
     }

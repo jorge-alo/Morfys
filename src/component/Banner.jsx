@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import '../../styles/Banner.css'
 import { DataContext } from '../context/DataContext';
 
