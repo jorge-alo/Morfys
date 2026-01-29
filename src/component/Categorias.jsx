@@ -1,13 +1,13 @@
+import { useMemo } from 'react';
 import '../../styles/Categorias.css'
 
 export const Categorias = ({ comidas, handleclickCardISTrue }) => {
 
-  const categoriasUnicas = [];
-  comidas?.forEach(comida => {
-    if (!categoriasUnicas.includes(comida.categoria)) {
-      categoriasUnicas.push(comida.categoria);
-    }
-  })
+const categoriasUnicas = useMemo(() => {
+        if (!comidas) return [];
+        return [...new Set(comidas.map(comida => comida.categoria))];
+    }, [comidas]);
+
   console.log("Valor de categoriasUmicas", categoriasUnicas);
   return (
     <div className='container-categorias'>
