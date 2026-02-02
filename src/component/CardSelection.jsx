@@ -66,11 +66,15 @@ export const CardSelection = ({ setSelectedVariante }) => {
         setContVariable(0);
         setVariantesOpcionesSelecionadas({});
         setModalIsTrue(false);
+        // Si el modal se cierra por éxito, quitamos la marca del historial
+        if (window.history.state?.modal) {
+            window.history.back();
+        }
     }
 
     const handleTamañoSumar = (opcion) => {
         setVariantesOpcionesSelecionadas(prev => {
-            const prevOpciones = prev[opcion.nombre] || { cantOpciones: 0, valor: 0, id: opcion.id  }
+            const prevOpciones = prev[opcion.nombre] || { cantOpciones: 0, valor: 0, id: opcion.id }
             const nuevoValor = prevOpciones.cantOpciones + 1;
 
             const actualizado = {
@@ -147,7 +151,7 @@ export const CardSelection = ({ setSelectedVariante }) => {
     return (
         <div className="container-modal">
             <div className="container-modal__data">
-                <p className='modal-cerrar' onClick={() => setModalIsTrue(false)}> X </p>
+                <p className='modal-cerrar' onClick={() => window.history.back()}> X </p>
                 <h3> {
                     (comidaData.variantes && comidaData.variantes.length == 0)
                         ? comidaData.name
@@ -185,22 +189,26 @@ export const CardSelection = ({ setSelectedVariante }) => {
                     {comidaData.tamanio ? "" : comidaData.price == 0 ? "" : <p className="pricevariable"> ${comidaData.priceVariable} </p>}
                 </div>
                 {
-                    comidaData.tamanio ? ""
-                        :
-                        comidaData.variantesOpcionesSelecionadas
-                            ?
-                            <div className="variantesOpcionesSeleccionadas">
-                                {Object.entries(comidaData.variantesOpcionesSelecionadas).map(([nombre, item]) => (
-                                    <div key={nombre} className="variantesOpcionesSeleccionadas__data">
-                                        <div>
-                                            <h6> {item.cantOpciones}X </h6>
-                                            <h5> {nombre} </h5>
+                    !comidaData.tamanio && comidaData.variantesOpcionesSelecionadas && (
+                        <div className="variantesOpcionesSeleccionadas">
+                            {Object.entries(comidaData.variantesOpcionesSelecionadas).map(([grupoNombre, opciones]) => (
+                                // Recorremos cada opción dentro del grupo (ej: Jamon, Carne...)
+                                <div key={grupoNombre}>
+                                    <h5> {grupoNombre} </h5>
+                                    {Object.entries(opciones).map(([nombreOpcion, detalle]) => (
+                                        <div key={nombreOpcion} className="variantesOpcionesSeleccionadas__data">
+                                            <div>
+                                                <h6> {detalle.cantOpciones}X </h6>
+                                                <h5> {nombreOpcion} </h5>
+                                            </div>
+                                            <h5> {detalle.valor > 0 ? `$${detalle.valor}` : ""} </h5>
                                         </div>
-                                        <h5> {item.valor == 0 ? "" : `$${item.valor}`}  </h5>
-                                    </div>
-                                ))}
-                            </div>
-                            : ""
+                                    ))}
+                                </div>
+                            ))
+                            }
+                        </div>
+                    )
                 }
                 <div>
                 </div>
@@ -228,10 +236,32 @@ export const CardSelection = ({ setSelectedVariante }) => {
                         ))}
                     </div>
                     :
-                    comidaData.variantes && comidaData.variantes.length > 0 &&
-                    <div className='container-variantes'>
-                        <span>{comidaData.variantes[0].nombre}</span> <p onClick={() => setSelectedVariante(true)} >Seleccionar</p>
-                    </div>
+                    (
+                        comidaData.variantes && comidaData.variantes.length > 0 && (
+                            <div className="container-todos-los-grupos">
+                                {comidaData.variantes.map((variante, index) => {
+                                    // ✅ BUSCAMOS POR NOMBRE: Verificamos si el nombre de este grupo existe en las selecciones
+                                    const yaTieneSeleccion = variantesOpcionesSelecionadas &&
+                                        variantesOpcionesSelecionadas[variante.nombre];
+
+                                    return (
+                                        <div className='container-variantes' key={variante.id || index}>
+                                            <span>{variante.nombre}</span>
+                                            <p onClick={() => setSelectedVariante(variante)}>
+                                                {/* Ahora sí cambiará de Seleccionar a Editar */}
+                                                {yaTieneSeleccion ? 'Editar' : 'Seleccionar'}
+                                            </p>
+
+                                            {/* El check verde también se activará correctamente */}
+                                            {yaTieneSeleccion && (
+                                                <span className="check-icon"> ✅ </span>
+                                            )}
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        )
+                    )
             }
 
             {
@@ -254,50 +284,66 @@ export const CardSelection = ({ setSelectedVariante }) => {
             <button
                 onClick={handleClickEnviar}
                 className={
-                    comidaData.tamanio == 1
-                        ?
-                        (comidaData.variantesOpcionesSelecionadas && Object.entries(comidaData.variantesOpcionesSelecionadas).length > 0)
-                            ?
-                            'modal-button'
-                            :
-                            'modal-buton-disable'
-                        :
-                        comidaData.variantes && comidaData.variantes.length > 0
-                            ?
-                            Object.keys(comidaData.variantesOpcionesSelecionadas || {}).length > 0
+                    (() => {
+                        // Caso 1: Es un producto con tamaños (tamanio == 1)
+                        if (comidaData.tamanio == 1) {
+                            return (comidaData.variantesOpcionesSelecionadas && Object.keys(comidaData.variantesOpcionesSelecionadas).length > 0)
                                 ? 'modal-button'
-                                : 'modal-buton-disable'
-                            :
-                            'modal-button'
+                                : 'modal-buton-disable';
+                        }
+
+                        // Caso 2: Tiene variantes (Promo, combo, etc.)
+                        if (comidaData.variantes && comidaData.variantes.length > 0) {
+                            const totalGruposObligatorios = comidaData.variantes.length;
+                            const gruposSeleccionados = Object.keys(comidaData.variantesOpcionesSelecionadas || {}).length;
+
+                            // Solo habilitar si eligió algo en cada uno de los grupos
+                            return gruposSeleccionados === totalGruposObligatorios
+                                ? 'modal-button'
+                                : 'modal-buton-disable';
+                        }
+
+                        // Caso 3: No tiene variantes (Producto simple)
+                        return 'modal-button';
+                    })()
                 }
                 disabled={
-                    comidaData.tamanio == 1
-                        ?
-                        !(comidaData.variantesOpcionesSelecionadas && Object.entries(comidaData.variantesOpcionesSelecionadas).length > 0)
-                        :
-                        comidaData.variantes && comidaData.variantes.length > 0
-                            ? Object.keys(comidaData.variantesOpcionesSelecionadas || {}).length === 0
-                            : false
+                    (() => {
+                        if (comidaData.tamanio == 1) {
+                            return !(comidaData.variantesOpcionesSelecionadas && Object.keys(comidaData.variantesOpcionesSelecionadas).length > 0);
+                        }
+                        if (comidaData.variantes && comidaData.variantes.length > 0) {
+                            const totalGruposObligatorios = comidaData.variantes.length;
+                            const gruposSeleccionados = Object.keys(comidaData.variantesOpcionesSelecionadas || {}).length;
+                            return gruposSeleccionados !== totalGruposObligatorios;
+                        }
+                        return false;
+                    })()
                 }
             >
                 {
-                    comidaData.tamanio == 1
-                        ?
-                        comidaData.variantesOpcionesSelecionadas && Object.entries(comidaData.variantesOpcionesSelecionadas).length > 0
-                            ?
-                            <p> Agregar a mi pedido</p>
-                            :
-                            <p> Selecciona al menos una</p>
-                        :
-                        comidaData.variantes && comidaData.variantes.length > 0
-                            ?
-                            Object.keys(comidaData.variantesOpcionesSelecionadas || {}).length > 0
-                                ?
-                                <p> Agregar a mi pedido</p>
-                                :
-                                <p>Selecciona {comidaData.variantes[0].nombre} para continuar</p>
-                            :
-                            <p> Agregar a mi pedido</p>
+                    (() => {
+                        if (comidaData.tamanio == 1) {
+                            return (comidaData.variantesOpcionesSelecionadas && Object.keys(comidaData.variantesOpcionesSelecionadas).length > 0)
+                                ? <p>Agregar a mi pedido</p>
+                                : <p>Selecciona al menos una</p>;
+                        }
+
+                        if (comidaData.variantes && comidaData.variantes.length > 0) {
+                            const totalGruposObligatorios = comidaData.variantes.length;
+                            const gruposSeleccionados = Object.keys(comidaData.variantesOpcionesSelecionadas || {}).length;
+
+                            if (gruposSeleccionados === totalGruposObligatorios) {
+                                return <p>Agregar a mi pedido</p>;
+                            } else {
+                                // Opcional: Mostrar cuál grupo falta
+                                const indexFaltante = gruposSeleccionados;
+                                return <p>Falta seleccionar {comidaData.variantes[indexFaltante]?.nombre}</p>;
+                            }
+                        }
+
+                        return <p>Agregar a mi pedido</p>;
+                    })()
                 }
                 {price == 0 ? '' : <p> ${price}</p>}
             </button>

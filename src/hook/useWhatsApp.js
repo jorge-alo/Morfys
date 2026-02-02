@@ -1,7 +1,6 @@
 import { useCallback } from "react"
 
 export const useWhatsApp = () => {
-  // Agregamos ubicacionLink como último parámetro con un valor por defecto vacío
   const enviarPedido = useCallback((cel, metodoEntrega, metodoPago, direccion, pedido, ubicacionLink = "") => {
     
     const fecha = new Date().toLocaleString('es-PE', {
@@ -19,33 +18,50 @@ export const useWhatsApp = () => {
     };
     const iconoPago = iconosPago[metodoPago] || "💰";
 
-    // --- CONSTRUCCIÓN DEL MENSAJE (Tu estructura original mantenida) ---
+    // --- CONSTRUCCIÓN DEL MENSAJE ---
     const mensaje = `¡NUEVO PEDIDO!\n\n` +
       `Fecha: ${fecha}\n` +
       `Forma de entrega:  ${iconoEntrega} ${metodoEntrega === 'Local' ? 'Retira en el local' : 'Envió a domicilio'}\n` +
       `Método de pago: ${iconoPago} ${metodoPago}\n` +
       
-      // Aquí insertamos la lógica de ubicación mejorada
       (metodoEntrega === 'Envienmelo' 
         ? `Ubicación: ${direccion}\n${ubicacionLink ? `📍 Mapa: ${ubicacionLink}\n` : ''}` 
         : '') +
       
-      `Pedido:\n ------------------- \n ${pedido.map(p => {
-        const lineaPrincipal = ` ${p.tamanio || p.price == 0 ? "" : p.cant + 'x'} ${p.name} ${p.tamanio || p.price == 0 ? "" : '$' + p.priceVariable}`;
-        const variantes = p.variantes?.length > 0
-          ? `${p.variantes[0].nombre}:\n` + Object.entries(p.variantesOpcionesSelecionadas).map(([nombre, valor]) =>
-            `  ${valor.cantOpciones}x ${nombre} ${valor.valor == 0 ? "" : '$' + valor.valor} `
-          ).join('\n')
-          : '';
-        return ` ${lineaPrincipal}${variantes ? '\n' + variantes : ''}`;
+      `Pedido:\n-------------------\n${pedido.map(p => {
+        // Línea principal del producto
+        const lineaPrincipal = `${p.tamanio || p.price == 0 ? "" : p.cant + 'x '} ${p.name} ${p.tamanio || p.price == 0 ? "" : '- $' + p.priceVariable}`;
+        
+        let variantesTexto = "";
+
+        if (p.variantesOpcionesSelecionadas) {
+          if (!p.tamanio) {
+            // CASO 1: No es tamaño (Iteración doble: Grupos -> Opciones)
+            variantesTexto = Object.entries(p.variantesOpcionesSelecionadas).map(([nombreGrupo, opciones]) => {
+              const opcionesDetalle = Object.entries(opciones).map(([nombreOpcion, info]) => 
+                `   • ${info.cantOpciones}x ${nombreOpcion}${info.valor > 0 ? ' ($' + info.valor + ')' : ''}`
+              ).join('\n');
+              
+              return ` *${nombreGrupo}:*\n${opcionesDetalle}`;
+            }).join('\n');
+          } else {
+            // CASO 2: Tiene tamaño (Iteración simple: Key es el nombre del tamaño)
+            // Ejemplo: Chica: {cantOpciones: 1, valor: 5000}
+            variantesTexto = Object.entries(p.variantesOpcionesSelecionadas).map(([nombreTamanio, info]) => 
+              `   • ${info.cantOpciones}x ${nombreTamanio} ($${info.valor})`
+            ).join('\n');
+          }
+        }
+
+        return `${lineaPrincipal}${variantesTexto ? '\n' + variantesTexto : ''}`;
       }).join('\n-------------------\n')}\n\n` +
       
-      `Total: 🧾$${pedido.reduce((sum, item) => sum + (item.totalComida ? Number(item.totalComida) : Number(item.priceVariable)), 0)}`;
+      `Total: 🧾 *Subtotal: $${pedido.reduce((sum, item) => sum + (item.totalComida ? Number(item.totalComida) : Number(item.priceVariable)), 0)}*`;
 
     const mensajeCodificado = encodeURIComponent(mensaje)
     const url = `https://wa.me/${cel}?text=${mensajeCodificado}`;
     window.open(url, '_blank')
-  }, []) // Dependencias vacías para useCallback
+  }, []) 
 
   return { enviarPedido };
 }

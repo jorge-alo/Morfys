@@ -114,21 +114,37 @@ export const Mipedido = () => {
                       </div>
                       {item.tamanio ? "" : item.price == 0 ? "" : <span> (${item.price}) </span>}
                     </div>
-                    {
-                      item.variantesOpcionesSelecionadas
-                        ?
-                        Object.entries(item.variantesOpcionesSelecionadas).map(([nombre, data]) => (
-                          <div key={nombre} className='container-mipedido__opciones'>
+                    {item.tamanio && item.variantesOpcionesSelecionadas ? (
+                        Object.entries(item.variantesOpcionesSelecionadas).map(([grupoNombre, data]) => (
+                          <div key={grupoNombre} className='container-mipedido__opciones'>
                             <div className='mipedido-opciones__nombre'>
                               <span> {data.cantOpciones}X </span>
-                              <h6> {nombre} </h6>
+                              <h6> {grupoNombre} </h6>
                             </div>
                             <span> {data.valor == 0 ? "" : `($${data.valor})`} </span>
                           </div>
                         ))
-
-                        : ""
+                    )
+                    : ""
                     }
+                    {item.variantesOpcionesSelecionadas && !item.tamanio? (
+                      // 1. Primer nivel: Los grupos (ej: "Sabores", "Ingredientes")
+                      Object.entries(item.variantesOpcionesSelecionadas).map(([grupoNombre, opciones]) => (
+                        // 2. Segundo nivel: Las opciones dentro de cada grupo (ej: "Carne", "Jamon")
+                        <div key={grupoNombre}>
+                          <h5> {grupoNombre} </h5>
+                        {Object.entries(opciones).map(([nombreOpcion, data]) => (
+                          <div key={nombreOpcion} className='container-mipedido__opciones'>
+                            <div className='mipedido-opciones__nombre'>
+                              <span> {data.cantOpciones}X </span>
+                              <h6> {nombreOpcion} </h6>
+                            </div>
+                            <span> {data.valor == 0 ? "" : `($${data.valor})`} </span>
+                          </div>
+                        ))}
+                        </div>
+                      ))
+                    ) : ""}
                   </div>
                   <div className='container-totalcomida-eliminar'>
                     <h5> ${item.totalComida ? item.totalComida : item.priceVariable}</h5>
