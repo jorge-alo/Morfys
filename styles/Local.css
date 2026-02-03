@@ -1,25 +1,109 @@
-.container-local {   
-   height: 100dvh;
-    position: relative;
+.container-local {
+   /* Mantenemos lo que ya tienes */
+   min-height: 100dvh;
+   position: relative;
+
+   /* EL CAMBIO CLAVE: */
+   /* Este padding empuja el contenido hacia arriba. 
+       Aunque la categoría se abra y sea larguísima, 
+       el scroll te permitirá bajar hasta que ese padding 
+       quede debajo del footer, dejando las últimas comidas a la vista. */
+   padding-bottom: 120px;
+   box-sizing: border-box;
 }
+
 .container-local-section {
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-between;
+   margin-top: 10px;
+   display: flex;
+   justify-content: space-between;
+}
+
+.footer-fijo {
+   position: fixed;
+   bottom: 0;
+   left: 0;
+   width: 100%;
+   height: 80px;
+   background-color: #546790;
+   /* Tu azul actual */
+   z-index: 10000000;
+   border-top: 1px solid #2a54a5;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.footer-content {
+   width: 100%;
+   max-width: 1200px;
+   display: flex;
+   justify-content: space-around;
+   /* Separa los dos links */
+   align-items: center;
+   padding: 0 20px;
+}
+
+.footer-link {
+   text-decoration: none;
+   color: white;
+   display: flex;
+   align-items: center;
+   gap: 10px;
+   font-size: 0.9rem;
+   transition: transform 0.2s;
+}
+
+.footer-link:hover {
+   transform: translateY(-2px);
+   color: #e0e0e0;
+}
+
+.morfis-web strong {
+   text-decoration: underline;
+}
+
+.whatsapp-contact {
+   background-color: #25d366;
+   /* Verde oficial de WhatsApp */
+   padding: 8px 15px;
+   border-radius: 20px;
+   font-weight: bold;
+}
+
+.whatsapp-contact:hover {
+   background-color: #1ebe57;
+   color: white;
 }
 
 /*-----------------------------------media mobile---------------------------------*/
 
 @media (max-width: 550px) {
-   .container-local {  
-    height: auto; 
-     min-height: 100dvh;
-}
- .container-local-section {
-    position: sticky;
-    top: 200px;
-    flex-direction: column;
-    margin-top: 0;
-   
- }
+   .container-local {
+      height: auto;
+      min-height: 100dvh;
+      /* Aumentamos un poco más en mobile por si el footer ocupa más espacio visual */
+      padding-bottom: 100px;
+   }
+
+   .container-local-section {
+      /* Si usas sticky en 200px, el contenido se desplazará. 
+           Asegúrate de que esto no bloquee el scroll natural */
+      position: relative;
+      display: flex;
+      flex-direction: column;
+   }
+
+   .footer-content {
+      flex-direction: column;
+      /* Uno arriba del otro */
+      gap: 10px;
+   }
+
+   .footer-link {
+      font-size: 0.8rem;
+   }
+
+   .whatsapp-contact {
+      padding: 5px 12px;
+   }
 }
