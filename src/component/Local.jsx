@@ -116,6 +116,7 @@ export const Local = () => {
           <Modal />
           : ""
       }
+      
       <footer className="footer-fijo">
         <div className="footer-content">
           {/* Enlace a la web de Morfis */}
