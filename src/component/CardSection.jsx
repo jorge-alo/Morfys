@@ -1,4 +1,4 @@
-import { useContext, useMemo, useState } from 'react';
+import { useContext, useMemo, useState, useEffect } from 'react'; // Agregado useEffect
 import '../../styles/CardSection.css'
 import { DataContext } from '../context/DataContext';
 
@@ -13,6 +13,23 @@ export const CardSection = ({ comidas,  handleclickCardISTrue, categoriaAbierta 
     setComidaData(comida);
     setModalIsTrue(true);
   }
+
+  // --- SOLUCIÓN DEL SCROLL ---
+  useEffect(() => {
+    if (categoriaAbierta) {
+      const timeoutId = setTimeout(() => {
+        const id = categoriaAbierta.replace(/\s+/g, '-');
+        const elemento = document.getElementById(id);
+        if (elemento) {
+          const yOffset = -200; 
+          const y = elemento.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }, 100);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [categoriaAbierta]);
+  // ---------------------------
 
   const comidasPorCategorias = useMemo(() => {
     return comidas?.reduce((acc, comida) => {
@@ -83,7 +100,7 @@ export const CardSection = ({ comidas,  handleclickCardISTrue, categoriaAbierta 
                         comida.image
                           ?
                           <div className="container-cardsection__image">
-                            <img src={comida.image} alt={comida.image} />
+                            <img src={comida.image} alt={comida.image} loading="lazy"/>
                           </div>
                           :
                           <div className="container-cardsection__image">
