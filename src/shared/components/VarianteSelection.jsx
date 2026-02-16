@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import '../../styles/VarianteSelection.css'
-import { DataContext } from '../context/DataContext';
+import '../../../styles/VarianteSelection.css'
+import { DataContext } from '../../context/DataContext';
 
 export const VarianteSelection = ({ setSelectedVariante, varianteActual }) => {
 

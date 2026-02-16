@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import '../../styles/Categorias.css'
+import '../../../../styles/Categorias.css'
 
 export const Categorias = ({ comidas, handleclickCardISTrue }) => {
 

@@ -1,13 +1,14 @@
 import { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { DataContext } from "../context/DataContext"
-import { Banner } from "./Banner";
-import { Categorias } from "./Categorias";
-import { CardSection } from "./CardSection";
-import { Mipedido } from "./Mipedido";
-import '../../styles/Local.css'
-import { Modal } from "./Modal";
-import { ModalExpired } from "./ModalExpired";
+import { DataContext } from "../../../context/DataContext"
+import { Banner } from "../component/Banner";
+import { Categorias } from "../component/Categorias";
+import { Mipedido } from "../../pedido/components/Mipedido";
+import '../../../../styles/Local.css'
+import { Modal } from "../../../shared/components/Modal";
+import { ModalExpired } from "../../../shared/components/ModalExpired";
+import { CardSection } from "../../menu/components/CardSection";
+
 const MORFIS_DEFAULT_LOGO = "/morfis-logo.png";
 
 

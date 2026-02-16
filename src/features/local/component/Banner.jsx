@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import '../../styles/Banner.css'
-import { DataContext } from '../context/DataContext';
+import '../../../../styles/Banner.css'
+import { DataContext } from '../../../context/DataContext';
 
 export const Banner = ({ baner, name, logo }) => {
   const {restoData} = useContext(DataContext);
@@ -8,12 +8,7 @@ export const Banner = ({ baner, name, logo }) => {
     const banner = baner ? `${baner}` : 'https://res.cloudinary.com/dmnqe1fmn/image/upload/fondoBaner_zeeidl.webp'
     console.log("Valor de banner en Baner", banner);
     return (
-        <section
-            className='section-banner'
-            style={{
-                backgroundImage: `url(${banner})`
-            }}
-        >
+        <section className='section-banner'style={{backgroundImage: `url(${banner})` }}>
 
             <div className='container-data-banner'>
                 {
@@ -34,14 +29,8 @@ export const Banner = ({ baner, name, logo }) => {
                         </div>
 
                     }
-
                 </div>
             </div>
-
-
         </section>
-
-
-
     )
 }

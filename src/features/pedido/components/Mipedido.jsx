@@ -1,7 +1,7 @@
 import { useContext, useEffect, useMemo, useState } from 'react'
-import '../../styles/Mipedido.css'
-import { DataContext } from '../context/DataContext'
-import { estaAbierto } from '../hook/horarios.js';
+import '../../../../styles/Mipedido.css'
+import { DataContext } from '../../../context/DataContext.jsx'
+import { estaAbierto } from '../utils/horarios.js';
 
 export const Mipedido = () => {
   const { pedido, setPedido, setSelectedModalEnviar, setModalIsTrue, restoData } = useContext(DataContext);

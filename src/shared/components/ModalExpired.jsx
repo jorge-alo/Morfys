@@ -1,4 +1,4 @@
-import '../../styles/ModalExpired.css'
+import '../../../styles/ModalExpired.css'
 
 export const ModalExpired = () => {
   return (

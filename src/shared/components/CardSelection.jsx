@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
-import { DataContext } from "../context/DataContext";
-import '../../styles/CardSelection.css'
+import { DataContext } from "../../context/DataContext";
+import '../../../styles/CardSelection.css'
 
 export const CardSelection = ({ setSelectedVariante }) => {
     const { comidaData, setComidaData, setModalIsTrue, setPedido, variantesOpcionesSelecionadas, setVariantesOpcionesSelecionadas, contVariable, setContVariable, logo } = useContext(DataContext);
@@ -104,8 +104,6 @@ export const CardSelection = ({ setSelectedVariante }) => {
             return actualizado;
         })
     }
-    console.log("Valor de comidaData", comidaData);
-    console.log("Valor de varianteOpcionesSeleccionadas en cardSelection", variantesOpcionesSelecionadas);
 
     const handleTamañoRestar = (opcion) => {
         if (variantesOpcionesSelecionadas[opcion.nombre]?.cantOpciones > 0) {

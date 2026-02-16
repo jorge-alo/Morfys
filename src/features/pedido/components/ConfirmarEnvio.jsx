@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
-import { DataContext } from "../context/DataContext"
-import { useWhatsApp } from "../hook/useWhatsApp";
-import '../../styles/ConfirmarEnvio.css'
+import { DataContext } from "../../../context/DataContext"
+import { useWhatsApp } from "../hooks/useWhatsApp";
+import '../../../../styles/ConfirmarEnvio.css'
 
 export const ConfirmarEnvio = () => {
   const { restoData, postSendPedido, handleReset, valueInputEnvio, handleChange, setModalIsTrue, setPedido, pedido, setSelectedModalEnviar } = useContext(DataContext);

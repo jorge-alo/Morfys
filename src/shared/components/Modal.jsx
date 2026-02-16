@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import '../../styles/Modal.css'
+import '../../../styles/Modal.css'
 import { CardSelection } from './CardSelection';
 import { VarianteSelection } from './VarianteSelection';
 import { useContext } from 'react';
-import { DataContext } from '../context/DataContext';
-import { ConfirmarEnvio } from './ConfirmarEnvio';
+import { DataContext } from '../../context/DataContext';
+import { ConfirmarEnvio } from '../../features/pedido/components/ConfirmarEnvio';
 
 export const Modal = () => {
     const {
