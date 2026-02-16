@@ -32,18 +32,35 @@ export const CardSection = ({ comidas,  handleclickCardISTrue, categoriaAbierta 
   // ---------------------------
 
   const comidasPorCategorias = useMemo(() => {
-    return comidas?.reduce((acc, comida) => {
-      const cat = comida.categoria;
-      if (!acc[cat]) acc[cat] = [];
-      if (comida.standby != 1 && comida.tamanio != 1) {
-        acc[cat].push(comida);
-      }
-      if (comida.tamanio == 1 && comida.variantes[0].opciones.some(op => op.standby != 1)) {
-        acc[cat].push(comida)
-      }
-      return acc;
-    }, {})
-  }, [comidas])
+  if (!comidas) return {};
+
+  const resultado = comidas.reduce((acc, comida) => {
+    const cat = comida.categoria;
+
+    // Verificamos si tiene opciones activas
+    const tieneOpcionesActivas =
+      comida.variantes?.[0]?.opciones?.some(op => op.standby != 1);
+
+    if (!tieneOpcionesActivas) return acc;
+
+    // Lógica de visibilidad
+    const esVisible =
+      (comida.standby != 1 && comida.tamanio != 1) ||
+      comida.tamanio == 1;
+
+    if (!esVisible) return acc;
+
+    // SOLO si es válida creamos la categoría
+    if (!acc[cat]) acc[cat] = [];
+
+    acc[cat].push(comida);
+
+    return acc;
+  }, {});
+
+  return resultado;
+}, [comidas]);
+
 
  const categoriasOrdenadas = useMemo(() => {
   if (!comidasPorCategorias) return [];
