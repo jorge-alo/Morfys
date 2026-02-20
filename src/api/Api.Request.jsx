@@ -4,14 +4,14 @@ const api = axios.create({
 })
 
 export const apiGetDataComida = async (name) => {
- return await api.get(`/${name}`)
+ return await api.get(`/comidas/${name}`)
 }
 
 export const apiGetDataResto = async (name) => {
- return await api.get(`/resto/${name}`)
+ return await api.get(`/comidas/resto/${name}`)
 }
 
 export const apiPostSendPedido = async (pedido) => {
- return await api.post(`/pedido/`, pedido);
+ return await api.post(`/pedidos/`, pedido);
 }
 
