@@ -1,78 +1,28 @@
 import { useContext } from 'react';
 import '../../../styles/VarianteSelection.css'
 import { DataContext } from '../../context/DataContext';
+import { useHandleSumarVarianteSelec } from '../hooks/useHandleSumarVarianteSelec';
+import { useHandleRestarVarianteSelec } from '../hooks/useHandleRestarVarianteSelec';
 
 export const VarianteSelection = ({ setSelectedVariante, varianteActual }) => {
 
-    const { 
-        comidaData, 
-        setComidaData, 
-        setModalIsTrue, 
-        variantesOpcionesSelecionadas, 
-        setVariantesOpcionesSelecionadas 
+    const {
+        comidaData,
+        setComidaData,
+        setModalIsTrue,
+        variantesOpcionesSelecionadas,
     } = useContext(DataContext);
 
-    // --- CAMBIO 1: Usamos varianteActual para el límite ---
-    const limite = varianteActual.limite ? varianteActual.limite : null;
-    const cantPedido = comidaData.cant;
-    const cantOpcionesMax = limite && (limite * cantPedido);
+    const {
+        limite,
+        handleSumar,
+        contVariableGrupo,
+        cantOpcionesMax,
+        seleccionDelGrupo
+    } = useHandleSumarVarianteSelec(varianteActual);
 
-    // --- CAMBIO 2: Lógica de contador local para este grupo específico ---
-    const seleccionDelGrupo = variantesOpcionesSelecionadas[varianteActual.nombre] || {};
-    const contVariableGrupo = Object.values(seleccionDelGrupo).reduce((acc, el) => acc + el.cantOpciones, 0);
+    const { handleRestar } = useHandleRestarVarianteSelec(varianteActual);
 
-    const handleSumar = (opcion) => {
-        // Validamos contra el límite del grupo actual
-        if (limite && contVariableGrupo >= cantOpcionesMax) {
-            return;
-        }
-
-        setVariantesOpcionesSelecionadas(prev => {
-            const grupoPrevio = prev[varianteActual.nombre] || {};
-            const prevOpciones = grupoPrevio[opcion.nombre] || { cantOpciones: 0, valor: 0, id: opcion.id };
-            const nuevoValor = prevOpciones.cantOpciones + 1;
-
-            return {
-                ...prev,
-                [varianteActual.nombre]: {
-                    ...grupoPrevio,
-                    [opcion.nombre]: {
-                        id: opcion.id,
-                        cantOpciones: nuevoValor,
-                        valor: Number(opcion.precio_adicional) * nuevoValor
-                    }
-                }
-            };
-        });
-    };
-
-    const handleRestar = (opcion) => {
-        const grupoPrevio = variantesOpcionesSelecionadas[varianteActual.nombre] || {};
-        
-        if (grupoPrevio[opcion.nombre]?.cantOpciones > 0) {
-            setVariantesOpcionesSelecionadas(prev => {
-                const grupoActual = prev[varianteActual.nombre] || {};
-                const nuevoValor = grupoActual[opcion.nombre].cantOpciones - 1;
-                
-                const nuevoGrupo = { ...grupoActual };
-                
-                if (nuevoValor === 0) {
-                    delete nuevoGrupo[opcion.nombre];
-                } else {
-                    nuevoGrupo[opcion.nombre] = {
-                        ...grupoActual[opcion.nombre],
-                        cantOpciones: nuevoValor,
-                        valor: Number(opcion.precio_adicional) * nuevoValor
-                    };
-                }
-
-                return {
-                    ...prev,
-                    [varianteActual.nombre]: nuevoGrupo
-                };
-            });
-        }
-    };
 
     const handleOnclick = () => {
         // Calculamos el total sumando todos los grupos seleccionados
@@ -80,15 +30,13 @@ export const VarianteSelection = ({ setSelectedVariante, varianteActual }) => {
             const sumaGrupo = Object.values(grupo).reduce((sub, item) => sub + item.valor, 0);
             return acc + sumaGrupo;
         }, 0);
-
+        
         const totalComida = Number(comidaData.priceVariable) + totalAdicionales;
-
         setComidaData(item => ({
             ...item,
             variantesOpcionesSelecionadas,
             totalComida
         }));
-        
         setSelectedVariante(null); // Volvemos a CardSelection
     };
 

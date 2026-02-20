@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import '../../../../styles/Categorias.css'
 
 export const Categorias = ({ comidas, handleclickCardISTrue }) => {
-
+  
 const categoriasUnicas = useMemo(() => {
         if (!comidas) return [];
         return [...new Set(comidas.map(comida => comida.categoria))];

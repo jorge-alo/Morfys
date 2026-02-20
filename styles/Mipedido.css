@@ -138,7 +138,7 @@
     .section-mipedido {
         display: none;
     }
-    .section-mipedido__mobile {
+    .section-mipedido__mobile  {
         
         display: flex;
         flex-direction: column;

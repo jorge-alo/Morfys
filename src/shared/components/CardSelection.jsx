@@ -1,263 +1,32 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { DataContext } from "../../context/DataContext";
 import '../../../styles/CardSelection.css'
+import { useSetComidaData } from "../hooks/useSetComidaData";
+import { CardSelectionModalData } from "./CardSelectionModalData";
+import { TamañoMostrar } from "./TamañoMostrar";
+import { VarianteDataEnCard } from "./VarianteDataEnCard";
+import { Unidades } from "./Unidades";
+import { BotonEnviarVariantesCard } from "./BotonEnviarVariantesCard";
 
 export const CardSelection = ({ setSelectedVariante }) => {
-    const { comidaData, setComidaData, setModalIsTrue, setPedido, variantesOpcionesSelecionadas, setVariantesOpcionesSelecionadas, contVariable, setContVariable, logo } = useContext(DataContext);
+    const { comidaData} = useContext(DataContext);
     const [cont, setCont] = useState(() => comidaData.cant || 1);
 
-
-    const handleSumar = () => {
-        setCont(prev => prev + 1)
-    }
-
-    const handleRestar = () => {
-        if (cont > 1) {
-            setCont(prev => prev - 1);
-        }
-    }
-    console.log("Valor de cont en cardSelection", cont);
-    console.log("Valor de contVariable en cardSelection", contVariable);
-    useEffect(() => {
-
-        setComidaData(item => {
-            if (item.tamanio == 1) {
-                return {
-                    ...item,
-                    variantesOpcionesSelecionadas
-                }
-            }
-            const priceVariable = Number(item.price) * Number(cont);
-            if (cont != item.cant) {
-                setContVariable(0);
-                setVariantesOpcionesSelecionadas({});
-                const { variantesOpcionesSelecionadas, ...rest } = item;
-                return {
-                    ...rest,
-                    cant: cont,
-                    priceVariable
-                }
-            }
-            return {
-                ...item,
-                cant: cont,
-                priceVariable
-            }
-        })
-    }, [cont, variantesOpcionesSelecionadas])
-
-    const handleClickEnviar = () => {
-
-
-        setPedido(pedidoPrevio => {
-
-            const siYaExiste = pedidoPrevio.some(item => item.id == comidaData.id);
-
-            if (siYaExiste) {
-                return pedidoPrevio.map(item =>
-                    item.id == comidaData.id
-                        ? comidaData
-                        : item
-                )
-            } else {
-                return [...pedidoPrevio, comidaData]
-            }
-        })
-        setContVariable(0);
-        setVariantesOpcionesSelecionadas({});
-        setModalIsTrue(false);
-        // Si el modal se cierra por éxito, quitamos la marca del historial
-        if (window.history.state?.modal) {
-            window.history.back();
-        }
-    }
-
-    const handleTamañoSumar = (opcion) => {
-        setVariantesOpcionesSelecionadas(prev => {
-            const prevOpciones = prev[opcion.nombre] || { cantOpciones: 0, valor: 0, id: opcion.id }
-            const nuevoValor = prevOpciones.cantOpciones + 1;
-
-            const actualizado = {
-                ...prev,
-                [opcion.nombre]: {
-                    id: opcion.id,
-                    cantOpciones: nuevoValor,
-                    valor: Number(opcion.precio_adicional) * nuevoValor
-                }
-            }
-
-            if (comidaData.tamanio) {
-                const priceVariable = Object.entries(actualizado).reduce((acc, [key, obj]) => {
-                    return acc + obj.valor;
-                }, 0);
-
-                setComidaData(prev => {
-                    return {
-                        ...prev,
-                        priceVariable
-                    }
-
-                })
-            }
-
-
-            return actualizado;
-        })
-    }
-
-    const handleTamañoRestar = (opcion) => {
-        if (variantesOpcionesSelecionadas[opcion.nombre]?.cantOpciones > 0) {
-            setVariantesOpcionesSelecionadas(prev => {
-
-
-                const nuevoValor = prev[opcion.nombre].cantOpciones - 1;
-                const actualizado = {
-                    ...prev,
-                    [opcion.nombre]: {
-                        id: opcion.id,
-                        cantOpciones: nuevoValor,
-                        valor: Number(opcion.precio_adicional) * nuevoValor
-                    }
-                }
-
-                if (comidaData.tamanio) {
-                    const priceVariable = Object.entries(actualizado).reduce((acc, [key, obj]) => {
-                        return acc + obj.valor;
-                    }, 0);
-                    setComidaData(item => ({
-                        ...item,
-                        priceVariable
-                    })
-                    )
-                }
-                return actualizado;
-            })
-        }
-
-        setVariantesOpcionesSelecionadas(prev => {
-            const nuevoEstado = { ...prev };
-            delete nuevoEstado[opcion.nombre];
-            return nuevoEstado;
-        })
-    }
-    const price = comidaData.variantesOpcionesSelecionadas
-        ?
-        (comidaData.tamanio == 1 ? comidaData.priceVariable : comidaData.totalComida)
-        :
-        comidaData.priceVariable;
+    useSetComidaData(cont);
 
     return (
         <div className="container-modal">
-            <div className="container-modal__data">
-                <p className='modal-cerrar' onClick={() => window.history.back()}> X </p>
-                <h3> {
-                    (comidaData.variantes && comidaData.variantes.length == 0)
-                        ? comidaData.name
-                        : comidaData.categoria}
-                </h3>
-                {
-                    comidaData.image
-                        ? <div className="container-modal__image">
-                            <img src={comidaData.image} />
-                        </div>
-                        : <div className="container-modal__image">
-                            <img src={logo} />
-                        </div>
-                }
-
-                <div className='container-modal__description'>
-                    <div className='description'>
-                        <div className="container-modal__container-description">
-                            {
-                                comidaData.tamanio == 1
-                                    ?
-
-                                    <h5> {comidaData.name} </h5>
-
-                                    :
-                                    <div>
-                                        <h7>{comidaData.price == 0 ? "" : `${cont}X`}</h7>
-                                        <h5> {comidaData.name} </h5>
-                                        {comidaData.price == 0 ? "" : <h5 className="container-modal__container-description_price"> (${comidaData.price}) </h5>}
-                                    </div>
-                            }
-
-                        </div>
-                    </div>
-                    {comidaData.tamanio ? "" : comidaData.price == 0 ? "" : <p className="pricevariable"> ${comidaData.priceVariable} </p>}
-                </div>
-                {
-                    !comidaData.tamanio && comidaData.variantesOpcionesSelecionadas && (
-                        <div className="variantesOpcionesSeleccionadas">
-                            {Object.entries(comidaData.variantesOpcionesSelecionadas).map(([grupoNombre, opciones]) => (
-                                // Recorremos cada opción dentro del grupo (ej: Jamon, Carne...)
-                                <div key={grupoNombre}>
-                                    <h5> {grupoNombre} </h5>
-                                    {Object.entries(opciones).map(([nombreOpcion, detalle]) => (
-                                        <div key={nombreOpcion} className="variantesOpcionesSeleccionadas__data">
-                                            <div>
-                                                <h6> {detalle.cantOpciones}X </h6>
-                                                <h5> {nombreOpcion} </h5>
-                                            </div>
-                                            <h5> {detalle.valor > 0 ? `$${detalle.valor}` : ""} </h5>
-                                        </div>
-                                    ))}
-                                </div>
-                            ))
-                            }
-                        </div>
-                    )
-                }
-                <div>
-                </div>
-            </div>
+            <CardSelectionModalData cont = {cont}/>
+           
             {
                 comidaData.tamanio
                     ?
                     comidaData.variantes && comidaData.variantes.length > 0 &&
-                    <div className="container-tamaño">
-                        <span> {comidaData.variantes[0].nombre} </span>
-                        {Object.entries(comidaData.variantes[0].opciones).map(([op, valor]) => (
-                            valor.standby == 0 &&
-                            <div key={valor.nombre} className="container-tamaño__opcion">
-                                <div className="container-tamaño-opcion__seleccion">
-                                    <h5>{valor.nombre} / ${valor.precio_adicional}</h5>
-                                    <div className="container-tamaño-opcion-seleccion__sumar-restar">
-                                        <span onClick={() => handleTamañoRestar(valor)} >-</span>
-                                        <p> {variantesOpcionesSelecionadas[valor.nombre] ? variantesOpcionesSelecionadas[valor.nombre].cantOpciones : 0} </p>
-                                        <span onClick={() => handleTamañoSumar(valor)} >+</span>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        ))}
-                    </div>
+                   <TamañoMostrar/>
                     :
                     (
                         comidaData.variantes && comidaData.variantes.length > 0 && (
-                            <div className="container-todos-los-grupos">
-                                {comidaData.variantes.map((variante, index) => {
-                                    // ✅ BUSCAMOS POR NOMBRE: Verificamos si el nombre de este grupo existe en las selecciones
-                                    const yaTieneSeleccion = variantesOpcionesSelecionadas &&
-                                        variantesOpcionesSelecionadas[variante.nombre];
-
-                                    return (
-                                        <div className='container-variantes' key={variante.id || index}>
-                                            <span>{variante.nombre}</span>
-                                            <p onClick={() => setSelectedVariante(variante)}>
-                                                {/* Ahora sí cambiará de Seleccionar a Editar */}
-                                                {yaTieneSeleccion ? 'Editar' : 'Seleccionar'}
-                                            </p>
-
-                                            {/* El check verde también se activará correctamente */}
-                                            {yaTieneSeleccion && (
-                                                <span className="check-icon"> ✅ </span>
-                                            )}
-                                        </div>
-                                    );
-                                })}
-                            </div>
+                            <VarianteDataEnCard setSelectedVariante= {setSelectedVariante}/>
                         )
                     )
             }
@@ -269,82 +38,11 @@ export const CardSelection = ({ setSelectedVariante }) => {
                     comidaData.price == 0
                         ? ""
                         :
-                        <div className='container-unidades'>
-                            <p>Unidades</p>
-                            <div>
-                                <span onClick={handleRestar} >-</span>
-                                <p> {cont} </p>
-                                <span onClick={handleSumar}>+</span>
-                            </div>
-                        </div>
+                        <Unidades cont = {cont} setCont = {setCont}/>
             }
 
-            <button
-                onClick={handleClickEnviar}
-                className={
-                    (() => {
-                        // Caso 1: Es un producto con tamaños (tamanio == 1)
-                        if (comidaData.tamanio == 1) {
-                            return (comidaData.variantesOpcionesSelecionadas && Object.keys(comidaData.variantesOpcionesSelecionadas).length > 0)
-                                ? 'modal-button'
-                                : 'modal-buton-disable';
-                        }
-
-                        // Caso 2: Tiene variantes (Promo, combo, etc.)
-                        if (comidaData.variantes && comidaData.variantes.length > 0) {
-                            const totalGruposObligatorios = comidaData.variantes.length;
-                            const gruposSeleccionados = Object.keys(comidaData.variantesOpcionesSelecionadas || {}).length;
-
-                            // Solo habilitar si eligió algo en cada uno de los grupos
-                            return gruposSeleccionados === totalGruposObligatorios
-                                ? 'modal-button'
-                                : 'modal-buton-disable';
-                        }
-
-                        // Caso 3: No tiene variantes (Producto simple)
-                        return 'modal-button';
-                    })()
-                }
-                disabled={
-                    (() => {
-                        if (comidaData.tamanio == 1) {
-                            return !(comidaData.variantesOpcionesSelecionadas && Object.keys(comidaData.variantesOpcionesSelecionadas).length > 0);
-                        }
-                        if (comidaData.variantes && comidaData.variantes.length > 0) {
-                            const totalGruposObligatorios = comidaData.variantes.length;
-                            const gruposSeleccionados = Object.keys(comidaData.variantesOpcionesSelecionadas || {}).length;
-                            return gruposSeleccionados !== totalGruposObligatorios;
-                        }
-                        return false;
-                    })()
-                }
-            >
-                {
-                    (() => {
-                        if (comidaData.tamanio == 1) {
-                            return (comidaData.variantesOpcionesSelecionadas && Object.keys(comidaData.variantesOpcionesSelecionadas).length > 0)
-                                ? <p>Agregar a mi pedido</p>
-                                : <p>Selecciona al menos una</p>;
-                        }
-
-                        if (comidaData.variantes && comidaData.variantes.length > 0) {
-                            const totalGruposObligatorios = comidaData.variantes.length;
-                            const gruposSeleccionados = Object.keys(comidaData.variantesOpcionesSelecionadas || {}).length;
-
-                            if (gruposSeleccionados === totalGruposObligatorios) {
-                                return <p>Agregar a mi pedido</p>;
-                            } else {
-                                // Opcional: Mostrar cuál grupo falta
-                                const indexFaltante = gruposSeleccionados;
-                                return <p>Falta seleccionar {comidaData.variantes[indexFaltante]?.nombre}</p>;
-                            }
-                        }
-
-                        return <p>Agregar a mi pedido</p>;
-                    })()
-                }
-                {price == 0 ? '' : <p> ${price}</p>}
-            </button>
+            <BotonEnviarVariantesCard/>
+           
         </div >
     )
 }

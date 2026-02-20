@@ -1,4 +1,4 @@
-import { ComidaCard } from "./ComidaCard"
+import { ComidaCard } from "./ComidaCards/ComidaCard"
 
 
 export const CategoriasCard = ({
@@ -6,8 +6,7 @@ export const CategoriasCard = ({
     comidasArray,
     categoriaAbierta,
     handleclickCardISTrue,
-    handleclick,
-    logo }
+     }
 ) => {
     if (comidasArray.length > 0) {
         return (
@@ -18,8 +17,6 @@ export const CategoriasCard = ({
                         <ComidaCard
                             key={comida.id}
                             comida={comida}
-                            handleclick={handleclick}
-                            logo={logo}
                         />
                     ))}
                 </div>
