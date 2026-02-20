@@ -23,14 +23,17 @@ export const VarianteSelection = ({ setSelectedVariante, varianteActual }) => {
 
     const { handleRestar } = useHandleRestarVarianteSelec(varianteActual);
 
-
+    console.log("Valor de varianteActual en VarianteSelection", varianteActual)
+    console.log("Valor de limite en VarianteSelection", limite)
+    console.log("Valor de contVariableGrupo en VarianteSelection", contVariableGrupo)
+    console.log("Valor de cantOpcionesMax en VarianteSelection", cantOpcionesMax)
     const handleOnclick = () => {
         // Calculamos el total sumando todos los grupos seleccionados
         const totalAdicionales = Object.values(variantesOpcionesSelecionadas).reduce((acc, grupo) => {
             const sumaGrupo = Object.values(grupo).reduce((sub, item) => sub + item.valor, 0);
             return acc + sumaGrupo;
         }, 0);
-        
+
         const totalComida = Number(comidaData.priceVariable) + totalAdicionales;
         setComidaData(item => ({
             ...item,
@@ -51,12 +54,13 @@ export const VarianteSelection = ({ setSelectedVariante, varianteActual }) => {
                 </div>
                 <h3> Opciones disponibles</h3>
                 {
-                    limite &&
+                    limite ?
                         contVariableGrupo >= cantOpcionesMax
-                        ?
-                        <h5 className='limite'> Limite alcanzado</h5>
-                        :
-                        <h5 className='debeseleccionar'>Debe seleccionar {cantOpcionesMax} {varianteActual.nombre}</h5>
+                            ?
+                            <h5 className='limite'> Limite alcanzado</h5>
+                            :
+                            <h5 className='debeseleccionar'>Debe seleccionar {cantOpcionesMax} {varianteActual.nombre}</h5>
+                        : ""
                 }
 
                 <div className='variantes-opciones'>
