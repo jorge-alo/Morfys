@@ -26,7 +26,7 @@ export const agruparComidasPorCategorias = (comidas) => {
 
         return acc;
     }, {});
-
+    console.log("Valor de resultado en agruparComidasPorCategorias", resultado);
     return resultado;
 
 }
