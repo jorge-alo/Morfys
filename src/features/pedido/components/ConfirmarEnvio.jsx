@@ -83,10 +83,10 @@ export const ConfirmarEnvio = () => {
   }
 
   // Función auxiliar para no repetir código de limpieza
-  const finalizarProceso = (pedidoDB, linkGps) => {
-    postSendPedido(pedidoDB);
+  const finalizarProceso = async (pedidoDB, linkGps) => {
+   const response = await postSendPedido(pedidoDB);
     // Pasamos el nuevo parámetro linkGps al hook
-    enviarPedido(restoData.cel, metodoEntrega, metodoPago, direccion, pedido, linkGps);
+    enviarPedido(response, restoData.cel, metodoEntrega, metodoPago, direccion, pedido, linkGps);
     // ✅ 1. Solo disparamos el retroceso del historial
     if (window.history.state?.modal || window.history.state?.mipedido) {
       window.history.back();

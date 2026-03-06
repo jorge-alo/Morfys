@@ -1,8 +1,8 @@
 import { useCallback } from "react"
 
 export const useWhatsApp = () => {
-  const enviarPedido = useCallback((cel, metodoEntrega, metodoPago, direccion, pedido, ubicacionLink = "") => {
-    
+  const enviarPedido = useCallback((response, cel, metodoEntrega, metodoPago, direccion, pedido, ubicacionLink = "") => {
+   const pedidoId = response.data.pedidoId;
     const fecha = new Date().toLocaleString('es-PE', {
       day: '2-digit',
       month: '2-digit',
@@ -19,7 +19,7 @@ export const useWhatsApp = () => {
     const iconoPago = iconosPago[metodoPago] || "💰";
 
     // --- CONSTRUCCIÓN DEL MENSAJE ---
-    const mensaje = `¡NUEVO PEDIDO!\n\n` +
+    const mensaje = `¡NUEVO PEDIDO! N° ${pedidoId}\n\n` +
       `Fecha: ${fecha}\n` +
       `Forma de entrega:  ${iconoEntrega} ${metodoEntrega === 'Local' ? 'Retira en el local' : 'Envió a domicilio'}\n` +
       `Método de pago: ${iconoPago} ${metodoPago}\n` +
