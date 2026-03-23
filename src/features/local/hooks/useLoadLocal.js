@@ -13,7 +13,7 @@ export const useLoadLocal = (name, setComidas, setBaner, setExpired, setStandBy)
                 setBaner(result.data.resto.banner);
                 // 2. Guardamos los datos completos del restaurante para el nombre
                 setRestoData(result.data.resto);
-                setStandBy(result.data.standby);
+                setStandBy(result.data.resto.standby);
                 console.log("Valor de result en loadLocal", result);
             } catch (error) {
                 console.log("Error al cargar los datos", error);
