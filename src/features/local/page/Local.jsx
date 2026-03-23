@@ -21,8 +21,9 @@ export const Local = () => {
   const [baner, setBaner] = useState(null);
   const [expired, setExpired] = useState(null);
   const [categoriaAbierta, setCategoriaAbierta] = useState(null);
+  const [standBy, setStandBy] = useState(false);
 
-  useLoadLocal(name, setComidas, setBaner, setExpired);
+  useLoadLocal(name, setComidas, setBaner, setExpired, setStandBy);
   useTituloDinamico();
   useLogo();
   useScroll();
@@ -34,7 +35,7 @@ export const Local = () => {
   if (!restoData) return <p>Cargando menú...</p>;
   return (
     <div className="container-local">
-      {expired && <ModalExpired />}
+      {(expired | standBy) && <ModalExpired />}
       <Banner baner={baner} name={name} logo={logo} />
       <div className="container-local-section">
         <Categorias comidas={comidas} handleclickCardISTrue={handleclickCardISTrue} />

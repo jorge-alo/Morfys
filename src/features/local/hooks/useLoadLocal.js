@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import { DataContext } from "../../../context/DataContext";
 
 
-export const useLoadLocal = (name, setComidas, setBaner, setExpired) => {
+export const useLoadLocal = (name, setComidas, setBaner, setExpired, setStandBy) => {
     const { getDataComida,  setLogo,  setRestoData } = useContext(DataContext);
     useEffect(() => {
         const loadLocal = async () => {
@@ -13,6 +13,7 @@ export const useLoadLocal = (name, setComidas, setBaner, setExpired) => {
                 setBaner(result.data.resto.banner);
                 // 2. Guardamos los datos completos del restaurante para el nombre
                 setRestoData(result.data.resto);
+                setStandBy(result.data.standby);
                 console.log("Valor de result en loadLocal", result);
             } catch (error) {
                 console.log("Error al cargar los datos", error);
