@@ -35,7 +35,7 @@ export const Local = () => {
   if (!restoData) return <p>Cargando menú...</p>;
   return (
     <div className="container-local">
-      {(expired | standBy) && <ModalExpired />}
+      {(expired | standBy) ? <ModalExpired /> : ""}
       <Banner baner={baner} name={name} logo={logo} />
       <div className="container-local-section">
         <Categorias comidas={comidas} handleclickCardISTrue={handleclickCardISTrue} />
